@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import style from './css-app';
-import UserMain from './components/UserMain.jsx';
+import UserMain from './components/UserMain';
 
 class App extends Component {
   constructor (props) {
@@ -16,7 +16,9 @@ class App extends Component {
     return (
       <div className="container">
         <header className="app-header">
-          Header
+          <h1>
+          splitly (:
+          </h1>
         </header>
         <UserMain />
       </div>
@@ -26,4 +28,3 @@ class App extends Component {
 
 export default App
 
- 

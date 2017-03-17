@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import UserSummary from './UserSummary.jsx';
-import UserBillsTable from './UserBillsTable.jsx';
+import UserSummary from './UserSummary';
+import UserBillsTable from './UserBillsTable';
 
 class UserMain extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class UserMain extends Component {
     this.state = {
 
     };
-  
+
   }
 
 

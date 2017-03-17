@@ -1,0 +1,9 @@
+# dependencies
+/node_modules
+
+# production
+dist/bundle.js
+dist/bundle.js.map
+
+# misc
+.DS_Store

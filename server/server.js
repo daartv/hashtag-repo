@@ -1,7 +1,10 @@
 const express = require('express')
-/* * * MULTER FOR EXTRACTING IMAGE DATA * * */
+const session = require('express-session')
+
+const path = require('path')
+/* * * * MULTER FOR EXTRACTING IMAGE DATA * * */
 const multer = require('multer')
-/* * * AXIOS FOR PROMISES * * */
+/* * * * AXIOS FOR PROMISES * * */
 const axios = require('axios')
 
 const { extractText } = require('./utilities.js')
@@ -11,14 +14,24 @@ const imgUpload = multer({dest: 'temp/'})
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS = './credentials/googleServiceAccountKeys.json'
 
-app.use(express.static('../client/public'))
+app.use(express.static(path.join(__dirname, '../dist')))
 
-/* * * ON IMAGE UPLOAD * * */
+/* * * * genuuid is not yet defined, so commented out to appease server :) * * * */
+
+// app.use(session({
+//   genid: function(req) {
+//     return genuuid()
+//   },
+//   secret: 'Split Session Secret',
+//   resave: false,
+//   saveUninitialized: true,
+//   cookie: {}
+//   }));
+
+/* * * * ON IMAGE UPLOAD * * * */
 app.post('/image', imgUpload.single('image'), (req, res) => {
   const { path } = req.file
-
   extractText(path)
-
   .then((text) => {
     let response = { text }
     res.status(200).json(response)

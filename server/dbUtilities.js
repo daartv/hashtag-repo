@@ -1,9 +1,8 @@
 //request-handlers
-
 var request = require('request');
-var db = require('../db/config');
-var User = require('../models/user');
-var Bill = require('../models/bill');
+var db = require('./dbConfig');
+var User = require('./models/user');
+var Bill = require('./models/bill');
 
 
 exports.getBillsOwner = function(username){
