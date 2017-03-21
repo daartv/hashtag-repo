@@ -7,7 +7,7 @@ const multer = require('multer')
 /* * * * AXIOS FOR PROMISES * * */
 const axios = require('axios')
 
-const { extractText } = require('./utilities.js')
+const { extractText } = require('./utilities')
 
 const app = express()
 const imgUpload = multer({dest: 'temp/'})

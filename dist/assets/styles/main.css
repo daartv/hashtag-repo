@@ -2,6 +2,7 @@
   License: none (public domain)
 */
 /*  Reset   */
+/*
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -21,8 +22,9 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-}
+}*/
 /* HTML5 display-role reset for older browsers */
+/*
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block;
@@ -45,13 +47,13 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-
+*/
 /*
   ========================================
   Clearfix
   ========================================
 */
-
+/*
 .group:before,
 .group:after {
   content:"";
@@ -67,25 +69,25 @@ table {
   *zoom:1;
 }
 
-
+*/
 /*
   ========================================
   Typography
   ========================================
 */
-
+/*
 h1, h3, h4, h5, p {
   margin-bottom: 15px;
 }
 
-
+*/
 
 /*
   ========================================
   Custom styles
   ========================================
 */
-
+/*
 body {
   color: #888;
   font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -123,13 +125,13 @@ strong {
 cite, em {
   font-style: italic;
 }
-
+*/
 /*
   ========================================
   Links
   ========================================
 */
-
+/*
 a:hover {
   color: #00a4f7;
 
@@ -151,7 +153,7 @@ a.nav-action:hover {
   border-bottom: 5px solid #4286f4;
   padding: 0 10px;
 }
-
+*/
 /*
   ========================================
   Grid
@@ -221,6 +223,7 @@ Components
 
 .usersummary-th {
   /*border: 1px solid;*/
+  text-align: center;
   width: 200px;
   padding: 10px 10px;
 }
@@ -239,11 +242,11 @@ Components
 }
 
 .usersummary-options-td {
-  padding: 15px 15px;
+  /*padding: 15px 15px;*/
 }
 
 .usersummary-options td:hover {
-  color: #000;
+  color: blue;
 }
 
 /*******************/
@@ -252,15 +255,54 @@ Components
 .userbillstable-div {
   border: 1px solid;
   height: 600px;
-
 }
+
+.ubt-table {
+  width: 1000px;
+  margin: 10px auto;
+}
+
+
 /*******************/
 
 /* User Bills Table Entry */
-.userbillstableentry-div {
+.ubte-entry-div {
   border: 1px solid;
+  margin-bottom: 10px;
 }
+
+.ubte-table {
+
+}
+
+.ubte-td {
+  width: 200px;
+  text-align: center;
+}
+
+.ubte-entry-tr {
+  margin-top: 10px;
+}
+
+.ubte-desc-td" {
+  padding: 10px;
+}
+
 /*******************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-var mongoose = require('../db/config');
+var mongoose = require('../dbConfig');
 var request = require('request');
 
 
