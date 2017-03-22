@@ -42,7 +42,7 @@ class UserSummary extends Component {
             <th className="usersummary-th">Bills Remaining</th>
             </tr>
             <tr>
-              <td className="usersummary-td">${state.totalOwed ? state.totalOwed : defaults.totalOwed}</td>
+              <td className="usersummary-td">{state.totalOwed ? state.totalOwed : defaults.totalOwed}</td>
               <td className="usersummary-td">{state.billsRemaining ? state.billsRemaining : defaults.billsRemaining}</td>
             </tr>
           </tbody>
@@ -52,7 +52,7 @@ class UserSummary extends Component {
         <div className="usersummary-options">
           <table>
           <tbody>
-            <tr><td className="usersummary-options-td">+ Add Bill</td></tr>
+            <tr><td className="usersummary-options-td">+ Hello World</td></tr>
             <tr><td className="usersummary-options-td">+ Add Friend</td></tr>
             <tr><td className="usersummary-options-td">User Stats</td></tr>
           </tbody>

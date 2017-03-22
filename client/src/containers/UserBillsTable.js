@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import UserBillsTableEntry from './UserBillsTableEntry';
+import UserBillsTableEntry from '../components/UserBillsTableEntry';
 
 class UserBillsTable extends Component {
   constructor(props) {

@@ -12,14 +12,16 @@ class UserMain extends Component {
     };
 
   }
+  data() {
 
+  }
 
   render() {
 
 
     return (
       <div className="usermain-div">
-        UserMain
+        UserPage
         <UserSummary />
         <UserBillsTable />
       </div>

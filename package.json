@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": " # ",
   "scripts": {
-    "build:webpack": "webpack --config webpack-config.js",
+    "build:webpack": "webpack --config webpack.config.js",
     "build": "npm run clean && npm run build:webpack",
     "clean": "rimraf dist/bundle.js",
     "dev": "node server/serverDev.js",
-    "react": "webpack -d --watch",
+    "react": "webpack-dev-server -d --watch",
     "start": "nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -52,6 +52,7 @@
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^2.4.2",
     "webpack-hot-middleware": "^2.10.0"
   },
   "devDependencies": {

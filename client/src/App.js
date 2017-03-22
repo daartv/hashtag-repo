@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import style from './css-app';
-import UserMain from './components/UserMain';
+import UserMain from './containers/UserPage';
 
 class App extends Component {
   constructor (props) {
@@ -17,7 +17,7 @@ class App extends Component {
       <div className="container">
         <header className="app-header">
           <h1>
-          splitly (:
+          hello  splitly (:
           </h1>
         </header>
         <UserMain />
