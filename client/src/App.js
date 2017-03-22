@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-// import style from './css-app';
-import UserMain from './containers/UserPage';
+import style from './css-app';
+import UserPage from './containers/UserPage';
+
+const { container } = style
+
 
 class App extends Component {
   constructor (props) {
@@ -9,18 +12,13 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // console.log(UserMain);
+    // console.log(UserPage);
   }
 
   render () {
     return (
-      <div className="container">
-        <header className="app-header">
-          <h1>
-          hello  splitly (:
-          </h1>
-        </header>
-        <UserMain />
+      <div style={container}>
+        <UserPage />
       </div>
     );
   }

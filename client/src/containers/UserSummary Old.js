@@ -7,27 +7,45 @@ class UserSummary extends Component {
     super(props);
 
     this.state = {
+      userpic: '../assets/images/default-user.png',
       totalOwed: '0.00',
       billsRemaining: 0
     }
   }
 
   render() {
-    const { totalOwed, billsRemaining } = this.state;
+    const { userpic, totalOwed, billsRemaining } = this.state;
 
     return (
-      <div>
-        <Col md={4}></Col>
-        <Col md={2}>
-          <div><h5>Total Owed</h5></div>
-          <div>{totalOwed}</div>
-        </Col>
-        <Col md={2}>
-          <div><h5>Bills Remaining</h5></div>
-          <div>{billsRemaining}</div>
-        </Col>
-        <Col md={4}></Col>
+      <Col md={12}>
+      <div className="usersummary-div" >
+
+
+        <div className="usersummary-details" >
+          <table className="usersummary-table">
+          <tbody>
+            <tr>
+            <th className="usersummary-th">Total Money Owed</th>
+            <th className="usersummary-th">Bills Remaining</th>
+            </tr>
+            <tr>
+              <td className="usersummary-td">{totalOwed}</td>
+              <td className="usersummary-td">{billsRemaining}</td>
+            </tr>
+          </tbody>
+          </table>
+        </div>
+
+        <div className="usersummary-options">
+          <table>
+          <tbody>
+
+          </tbody>
+          </table>
+        </div>
+
       </div>
+      </Col>
     );
   }
 

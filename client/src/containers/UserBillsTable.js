@@ -43,7 +43,6 @@ class UserBillsTable extends Component {
 
     return (
       <div className="userbillstable-div">
-        UserBillsTable
         <div className="userbillstable-tabs">
 
         </div>
