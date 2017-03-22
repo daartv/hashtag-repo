@@ -10,7 +10,7 @@ var billSchema = mongoose.Schema({
   code: String,
   amount: Number,
   debt: Number,
-  image: String,
+  image: {data: Buffer, contentType: String},
   debtors: [{id: String, owed: Number, paidAmount: Number}]
 });
 
