@@ -5,11 +5,12 @@
 //unique pathname exists for the image
 //helper function to destroy temp files
 
-var request = require('request');
-var db = require('./dbConfig');
-var User = require('./models/user');
-var Bill = require('./models/bills');
-var Debtor = require('./models/debtor');
+const request = require('request');
+const db = require('./dbConfig');
+const User = require('./models/user');
+const Bill = require('./models/bills');
+const Debtor = require('./models/debtor');
+const fs = require('fs')
 
 //Password only needed if we aren't using Facebook oAuth.
   // MVP just using no oAuth and no encrypted PW.
@@ -33,13 +34,13 @@ exports.logoutUser = function(req, res){
 };
 
 exports.userBills = function(req, res){
-  exports.getBillsOwner(req.session.username);
+  exports.getBillsOwner(req, res);
 };
 
 
 exports.signInUser = function(req, res) {
-  var username = req.body.username;
-  var pw = req.body.password;
+  let username = req.body.username;
+  let pw = req.body.password;
 
   if(req.session.username){
     res.redirect('/profile/' + req.session.username);
@@ -59,16 +60,13 @@ exports.signInUser = function(req, res) {
 
 
 exports.userSignUp = function(req, res) {
-  var username = req.body.username;
-  var email = req.body.email;
-  // console.log('REQUEST', req)
-  console.log('USER', User);
-  console.log('BILLS', Bill);
-  console.log('DEBTOR', Debtor);
+  let username = req.body.username;
+  let email = req.body.email;
+
    User.findOne({username: username, email: email})
    .exec(function(err, user){
     if(user === null) {
-      var newUser = new User({
+      let newUser = new User({
         username: req.body.username,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -80,9 +78,9 @@ exports.userSignUp = function(req, res) {
         if(err){
           res.status(500).send(err);
         } else {
-          // req.session.username = newUser.username;
-          // req.session.userID = newUser.id;
-          console.log('hello');
+          req.session.username = newUser.username;
+          req.session.userID = newUser.id;
+          res.status(200).send(newUser);
         }
       });
     } else {
@@ -93,8 +91,8 @@ exports.userSignUp = function(req, res) {
 };
 
 
-exports.getBillsOwner = function(username){
-  Bill.find({owner: username})
+exports.getBillsOwner = function(req, res){
+  Bill.find({owner: req.session.username})
   .exec(function(error, bills){
     if(error){
       throw error;
@@ -111,8 +109,8 @@ exports.selectDebtors = function(debtors){
   return debtors.map(debtor => {
     return Debtor.findOne({email: debtor.email})
       .exec(function(err, debt){
-      if(err){
-        var newDebtor = new Debtor({
+      if(debt === null){
+        let newDebtor = new Debtor({
         firstName: debtor.fName,
         lastName: debtor.lName,
         email: debtor.email
@@ -121,9 +119,9 @@ exports.selectDebtors = function(debtors){
           if(err){
             res.status(500).send(err)
           }
-          return newDebtor;
+          return newDebtor.id;
         })
-      } else{
+      } else {
         return debt.id;
       }
     })
@@ -138,24 +136,27 @@ exports.addBill = function(req, res) {
     res.redirect('/login');
   }
 
+  let imageInfo = {
+    data: fs.readFileSync(req.file.billPhoto.path),
+    contentType: 'image/jpg'
+  }
   exports.selectDebtors(req.body.debtors)
-
   .then(function(debtorIds){
-    var billDebtors = debtorIds.map((id, ind) => {
+    let billDebtors = debtorIds.map((id, ind) => {
       return {
       id: id,
       owed: req.body.debtors[ind].owed,
       paidAmount: req.body.debtors[ind].paid
-    }
+      }
     });
 
-    var newBill = new Bill({
+    let newBill = new Bill({
       name: req.body.billName,
       owner: req.session.username,
       code: req.body.code,
       amount: req.body.totalAmount,
       debt: req.body.totalAmount,
-      image: '',
+      image: imageInfo,
       debtors: [billDebtors]
     });
 
@@ -174,7 +175,7 @@ exports.addBill = function(req, res) {
       if(err){
         res.status(500).send(err)
       } else {
-      // exports.getBillsOwner(user.username)
+        fs.unlink('./temp/' + req.file.billPhoto.path);
         res.send(user);
       }
     });

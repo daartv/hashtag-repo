@@ -1,5 +1,6 @@
 const express = require('express')
 const session = require('express-session')
+const fs = require('fs')
 
 const path = require('path')
 /* * * * MULTER FOR EXTRACTING IMAGE DATA * * */
@@ -18,21 +19,26 @@ app.use(express.static(path.join(__dirname, '../dist')))
 
 /* * * * genuuid is not yet defined, so commented out to appease server :) * * * */
 
-// app.use(session({
-//   genid: function(req) {
-//     return genuuid()
-//   },
-//   secret: 'Split Session Secret',
-//   resave: false,
-//   saveUninitialized: true,
-//   cookie: {}
-//   }));
+app.use(session({
+  secret: 'Split Session Secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {}
+  }));
+
 
 /* * * * ON IMAGE UPLOAD * * * */
+/* Steve comment - It would be super helpful to me to also send the path name where the file is stored. I added commented code accordingly, please let me know if this is incorrect */
 app.post('/image', imgUpload.single('image'), (req, res) => {
   const { path } = req.file
   extractText(path)
   .then((text) => {
+    /*
+    let response = {
+      text: { text },
+      path: path
+    } */
+
     let response = { text }
     res.status(200).json(response)
   })
