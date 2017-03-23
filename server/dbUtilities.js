@@ -10,7 +10,7 @@ const db = require('./dbConfig');
 const User = require('./models/user');
 const Bill = require('./models/bills');
 const Debtor = require('./models/debtor');
-const fs = require('fs')
+const fs = require('fs');
 
 //Password only needed if we aren't using Facebook oAuth.
   // MVP just using no oAuth and no encrypted PW.
@@ -28,9 +28,21 @@ exports.loginInUser = function(req, res){
 }
 
 exports.logoutUser = function(req, res){
-  req.session.destroy(function(){
-    res.redirect('/login');
+  let username = req.session.username;
+  if(username !== null){
+    let userDir = __dirname + '/' + username;
+    fs.unlink(userDir, function(err){
+      if(err){
+        console.log('error');
+      }
+      req.session.destroy(function(){
+      res.redirect('/login');
   })
+    })
+  }
+    else {
+      res.redirect('/login');
+    }
 };
 
 exports.userBills = function(req, res){
@@ -53,6 +65,7 @@ exports.signInUser = function(req, res) {
     } else {
       req.session.username = user.username;
       req.session.userID = user.id;
+      exports.createUserStorage(user.username);
       res.redirect('/profile/' + req.session.username);
     }
    })
@@ -97,6 +110,7 @@ exports.getBillsOwner = function(req, res){
     if(error){
       throw error;
     }
+    exports.createBillImages(req.session.username, bills);
     res.status(200).send(bills);
   })
 };
@@ -182,3 +196,23 @@ exports.addBill = function(req, res) {
     });
   });
 };
+
+//Create a temp directory and store bill images for user once they sign in
+exports.createUserStorage = function(username){
+  let newDir = __dirname + '/' + username;
+  fs.mkdirSync(newDir);
+}
+
+exports.createBillImages = function(user, bills){
+  let targetDir = __dirname + '/' + user;
+  bills.forEach(bill => {
+    let imgPath = targetDir + '/' + bill.name + '.jpg';
+    console.log(bill.image.data);
+    let imageData = bill.image.data;
+    fs.writeFile(imgPath, imageData, 'base64', function(err){
+      if(err){
+        throw err
+      }
+    })
+  })
+}
