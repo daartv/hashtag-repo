@@ -1,7 +1,7 @@
 // TEMPLATE
 
 import React from 'react'
-import { Form, FormGroup, InputGroup, FormControl, Button, Col } from 'react-bootstrap'
+import { Form, FormGroup, InputGroup, FormControl, Button, Col, DropdownButton, MenuItem } from 'react-bootstrap'
 
 const AddBill = (props) => {
   return (
@@ -23,6 +23,18 @@ const AddBill = (props) => {
               <FormControl type='text' placeholder='Amount owed' />
             </InputGroup>
           </Col>
+        </FormGroup>
+        <FormGroup>
+          <InputGroup>
+            <FormControl type="text" />
+            <DropdownButton
+              componentClass={InputGroup.Button}
+              id="input-dropdown-addon"
+              title="Action"
+            >
+              <MenuItem key="1">Item</MenuItem>
+            </DropdownButton>
+          </InputGroup>
         </FormGroup>
         <FormGroup>
           <Col md={4}>
