@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
+
+import Style from './userPage-css.js';
 import UserSummary from './UserSummary';
 import UserNavBar from './UserNavBar'
-import UserBillsTable from './UserBillsTable';
+
 import { Grid, Row, Col } from 'react-bootstrap'
 
+const { container } = Style
 
 
 class UserPage extends Component {
@@ -14,21 +17,20 @@ class UserPage extends Component {
   }
 
   render() {
-
     return (
-      // userBillsTable for the moment - will use React Router
-      <Grid fluid>
+      <Grid fluid style={container}>
         <Row>
-          <Col md={12}><UserNavBar /></Col>
+          <Col md={12}><UserNavBar/></Col>
         </Row>
         <Row>
           <UserSummary />
         </Row>
         <Row>
-        <Col md={12}><UserBillsTable /></Col>
+          {this.props.children}
         </Row>
       </Grid>
     );
   }
 }
 export default UserPage;
+
