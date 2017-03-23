@@ -2,7 +2,6 @@
 /* * * * WE DON'T NEED TO SPECIFY A PATH FOR AN NPM FILE * * * */
 
 /* * * * also we should check out mlab - it will let us share a database rather than storing locally * * * */
-
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/splitlyDB');
 
@@ -16,7 +15,7 @@ db.once('open', function(){
   console.log('database is connected');
 });
 
-module.exports = mongoose;
+module.exports = db;
 //use helper functions from the server configuration to direct the route through
 // require the models in the helper functions
 // do the work in the helper functions

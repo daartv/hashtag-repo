@@ -1,5 +1,5 @@
 //bills schema
-var mongoose = require('../dbConfig');
+var mongoose = require('../temp/dbConfig');
 var request = require('request');
 
 
