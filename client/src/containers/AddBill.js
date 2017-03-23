@@ -25,18 +25,6 @@ const AddBill = (props) => {
           </Col>
         </FormGroup>
         <FormGroup>
-          <InputGroup>
-            <FormControl type="text" />
-            <DropdownButton
-              componentClass={InputGroup.Button}
-              id="input-dropdown-addon"
-              title="Action"
-            >
-              <MenuItem key="1">Item</MenuItem>
-            </DropdownButton>
-          </InputGroup>
-        </FormGroup>
-        <FormGroup>
           <Col md={4}>
             <Button type='Add to bill'>
               Add to bill
