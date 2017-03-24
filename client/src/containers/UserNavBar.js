@@ -8,6 +8,8 @@ import NavDropMenu from '../components/NavDropMenu'
 
 class UserNavBar extends Component {
   render () {
+    const { uploadBill } = this.props
+
     return (
       <Navbar fluid>
         <Navbar.Header>
@@ -21,7 +23,8 @@ class UserNavBar extends Component {
            {`We <3 our members!`}
           </Navbar.Text>
           <Nav pullRight>
-            <NewBillButton />
+            <NewBillButton
+              uploadBill={uploadBill}/>
             <FriendsButton />
             <NavDropMenu />
           </Nav>
