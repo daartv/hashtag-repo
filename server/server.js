@@ -23,7 +23,7 @@ app.use(session({
   secret: 'Split Session Secret',
   resave: false,
   saveUninitialized: true,
-  cookie: {}
+  cookie: { maxAge: 360000 }
   }));
 
 

@@ -14,15 +14,6 @@ var userSchema = mongoose.Schema({
 
 var User = mongoose.model('User', userSchema);
 
-// var newUser = new User({
-//   username: 'someone else',
-//   firstName: 'WithD',
-//   lastName: 'Notsure',
-//   email: 'justsomeemail@somemail.com',
-//   password: 'password',
-//   bills: []
-// });
-
 
 
 module.exports = User;
