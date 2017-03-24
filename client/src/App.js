@@ -4,6 +4,7 @@ import { Router, Route, Link, IndexRoute, IndexLink, hashHistory } from 'react-r
 import UserPage from './containers/UserPage';
 import LoginPage from './containers/LoginPage';
 import SignupPage from './containers/SignupPage';
+import Main from './containers/Main';
 
 import UserBillsTable from './containers/UserBillsTable';
 import ViewBill from './components/ViewBill';
@@ -29,7 +30,7 @@ class App extends Component {
       <Router history={hashHistory}>
         <Route path='/login' component={LoginPage} />
         <Route path='/signup' component={SignupPage} />
-        <Route path='/' component={UserPage}>
+        <Route path='/' component={Main}>
 
           {/* * * * * NAV BAR ITEMS * * * * */}
           <IndexRoute component ={UserBillsTable} />
