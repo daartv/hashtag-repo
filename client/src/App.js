@@ -3,6 +3,9 @@ import { Router, Route, Link, IndexRoute, IndexLink, hashHistory } from 'react-r
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+
+
 import UserPage from './containers/UserPage';
 import LoginPage from './containers/LoginPage';
 import SignupPage from './containers/SignupPage';

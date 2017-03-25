@@ -13,14 +13,23 @@ class UserPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      uploadedBill: ''
     }
   }
 
+  uploadBill (uploadedBill) {
+    /* * * IS THIS WHERE WE SHOULD SAVE IT IN SOME TEMP FOLDER? * * * */
+  }
+
   render() {
+    const { uploadBill } = this;
     return (
       <Grid fluid style={container}>
         <Row>
-          <Col md={12}><UserNavBar/></Col>
+          <Col md={12}>
+            <UserNavBar
+              uploadBill={uploadBill.bind(this)}/>
+          </Col>
         </Row>
         <Row>
           <UserSummary />
