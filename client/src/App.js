@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Router, Route, Link, IndexRoute, IndexLink, hashHistory } from 'react-router';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 
 import UserPage from './containers/UserPage';
 import LoginPage from './containers/LoginPage';

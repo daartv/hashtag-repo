@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import AppBar from 'material-ui/AppBar';
+import MTP from 'material-ui/styles/MuiThemeProvider';
 
 import Style from './mainPage-css.js';
 import UserSummary from './UserSummary';
