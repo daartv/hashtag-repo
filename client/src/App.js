@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Router, Route, Link, IndexRoute, IndexLink, hashHistory } from 'react-router';
+import { Router, Route, Link, IndexRoute, IndexLink, hashHistory, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 
 import UserPage from './containers/UserPage';
@@ -19,6 +16,7 @@ import NewBill from './containers/NewBill';
 import AddFriend from './containers/AddFriend';
 import BillHistory from './containers/BillHistory';
 import Settings from './containers/Settings';
+import AddBill from './containers/AddBill';
 
 class App extends Component {
   constructor (props) {
@@ -33,20 +31,24 @@ class App extends Component {
   render () {
     return (
       <Router history={hashHistory}>
+      <Route path='/'>
+        <IndexRoute component ={Main} />
         <Route path='/login' component={LoginPage} />
         <Route path='/signup' component={SignupPage} />
-        <Route path='/' component={Main}>
 
           {/* * * * * NAV BAR ITEMS * * * * */}
+          <Route path='/userPage' component={UserPage}>
           <IndexRoute component ={UserBillsTable} />
           <Route path='/viewBill' component={ViewBill} />
           <Route path='/friendsList' component={FriendsList} />
           <Route path='/newBill' component={NewBill} />
+          <Route path='/addBill' component={AddBill} />
 
           {/* * * * * DROP DOWN MENU ITEMS * * * * */}
           <Route path='/addFriend' component={AddFriend} />
           <Route path='/billHistory' component={BillHistory} />
           <Route path='/settings' component={Settings} />
+        </Route>
         </Route>
       </Router>
     );
