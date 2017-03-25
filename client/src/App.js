@@ -21,33 +21,50 @@ import AddBill from './containers/AddBill';
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = {}
+    this.state = {
+      signedIn: true
+    }
+    this.requireAuth = this.requireAuth.bind(this);
+    this._onSignIn = this._onSignIn.bind(this);
   }
 
+  _onSignIn(signIn) {
+    if (signIn) {
+      this.setState({signedIn: signIn});
+    }
+  }
+
+  requireAuth(nextState, replace) {
+  if (!this.state.signedIn) {
+    replace({
+      pathname: '/login'
+    })
+  }
+}
   componentDidMount() {
-    // console.log(UserPage);
+    console.log(this.state.signedIn);
   }
 
   render () {
     return (
       <Router history={hashHistory}>
       <Route path='/'>
-        <IndexRoute component ={Main} />
-        <Route path='/login' component={LoginPage} />
+        <IndexRoute component={Main} signedIn={this.state.signedIn}/>
+        <Route path='/login' component={LoginPage} signedIn={this.state.signedIn}/>
         <Route path='/signup' component={SignupPage} />
 
           {/* * * * * NAV BAR ITEMS * * * * */}
-          <Route path='/userPage' component={UserPage}>
+          <Route path='/userPage' component={UserPage} onEnter={this.requireAuth}>
           <IndexRoute component ={UserBillsTable} />
-          <Route path='/viewBill' component={ViewBill} />
-          <Route path='/friendsList' component={FriendsList} />
-          <Route path='/newBill' component={NewBill} />
-          <Route path='/addBill' component={AddBill} />
+          <Route path='/viewBill' component={ViewBill} onEnter={this.requireAuth}/>
+          <Route path='/friendsList' component={FriendsList} onEnter={this.requireAuth}/>
+          <Route path='/newBill' component={NewBill} onEnter={this.requireAuth}/>
+          <Route path='/addBill' component={AddBill} onEnter={this.requireAuth}/>
 
           {/* * * * * DROP DOWN MENU ITEMS * * * * */}
-          <Route path='/addFriend' component={AddFriend} />
-          <Route path='/billHistory' component={BillHistory} />
-          <Route path='/settings' component={Settings} />
+          <Route path='/addFriend' component={AddFriend} onEnter={this.requireAuth}/>
+          <Route path='/billHistory' component={BillHistory} onEnter={this.requireAuth}/>
+          <Route path='/settings' component={Settings} onEnter={this.requireAuth}/>
         </Route>
         </Route>
       </Router>
