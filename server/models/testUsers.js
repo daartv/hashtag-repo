@@ -1,6 +1,6 @@
 var request = require('request');
 var mongoose = require('../dbConfig');
-var User = require('./user');
+// var User = require('./user');
 var helpers = require('../dbUtilities');
 
 // var newUser = new User({

@@ -7,6 +7,7 @@
 
 const request = require('request');
 const db = require('./dbConfig');
+const path = require('path')
 const User = require('./models/user');
 const Bill = require('./models/bills');
 const Debtor = require('./models/debtor');
@@ -199,12 +200,12 @@ exports.addBill = function(req, res) {
 
 //Create a temp directory and store bill images for user once they sign in
 exports.createUserStorage = function(username){
-  let newDir = __dirname + '/' + username;
+  let newDir = path.join(__dirname, '../dist') + '/' + username;
   fs.mkdirSync(newDir);
 }
 
 exports.createBillImages = function(user, bills){
-  let targetDir = __dirname + '/' + user;
+  let targetDir = path.join(__dirname, '../dist') + '/' + user;
   bills.forEach(bill => {
     let imgPath = targetDir + '/' + bill.name + '.jpg';
     console.log(bill.image.data);
