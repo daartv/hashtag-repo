@@ -5,6 +5,7 @@ import { Form, FormGroup, InputGroup, FormControl, Button, Col, DropdownButton, 
 
 const AddBill = (props) => {
   return (
+      
       <Form horizontal>
         <FormGroup controlId='addFriendName'>
           <Col md={4}>
