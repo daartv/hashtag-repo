@@ -1,15 +1,14 @@
 import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Nav, NavItem } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import FlatButton from 'material-ui/FlatButton';
+
 
 
 const FriendsButton = (props) => {
   return (
-    <Nav>
-      <LinkContainer to={{ pathname: '/friendsList' }}>
-      <NavItem>Friends</NavItem>
-      </LinkContainer>
-    </Nav>
+    <Link to='/home/friends'>
+      <FlatButton label='Friends'/>
+    </Link>
     )
   }
 

@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Style from './userPage-css.js';
 import UserSummary from './UserSummary';
-import UserNavBar from './UserNavBar'
-
-import { Grid, Row, Col } from 'react-bootstrap'
-
-const { container } = Style
-
+import UserNavBar from './UserNavBar';
+import UserBillsTable from './UserBillsTable'
+import FriendsList from './FriendsList';
+import AddFriend from './AddFriend';
+import BillHistory from './BillHistory';
+import Settings from './Settings';
 
 class UserPage extends Component {
   constructor(props) {
@@ -18,27 +18,23 @@ class UserPage extends Component {
   }
 
   uploadBill (uploadedBill) {
+    console.log('upload bill')
     /* * * IS THIS WHERE WE SHOULD SAVE IT IN SOME TEMP FOLDER? * * * */
   }
 
+
   render() {
-    console.log(this.props.children);
     const { uploadBill } = this;
     return (
-      <Grid fluid style={container}>
-        <Row>
-          <Col md={12}>
-            <UserNavBar
-              uploadBill={uploadBill.bind(this)}/>
-          </Col>
-        </Row>
-        <Row>
-          <UserSummary />
-        </Row>
-        <Row>
-          {this.props.children}
-        </Row>
-      </Grid>
+      <div>
+        <UserNavBar uploadBill={uploadBill.bind(this)}/>
+        {/* * * THIS COMPONENT BELOW THE NAV BAR WILL CONDITIONALLY RENDER * * * */}
+        <Route exact path='/home' component={ UserBillsTable }/>
+        <Route path='/home/friends' component={ FriendsList } />
+        <Route path='/home/addfriend' component={ AddFriend } />
+        <Route path='/home/billhistory' component={ BillHistory } />
+        <Route path='/home/settings' component={ Settings } />
+      </div>
     );
   }
 }

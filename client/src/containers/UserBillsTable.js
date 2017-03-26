@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import UserBillsTableEntry from '../components/UserBillsTableEntry';
+import UserSummary from './UserSummary'
 
+import Style from './userBillsTable-css';
+
+const { table } = Style
 class UserBillsTable extends Component {
   constructor(props) {
     super(props);
@@ -37,26 +41,21 @@ class UserBillsTable extends Component {
 
   }
 
-
   render() {
     const samples = this.exampleData;
 
     return (
-      <div className="userbillstable-div">
-        <div className="userbillstable-tabs">
-
-        </div>
-
-        <div className="ubt-table">
+      <div>
+        <UserSummary />
+        <div style={table}>
           {
             // <UserBillsTableEntry />
-            samples.map((entry) => <UserBillsTableEntry key={entry.id} entry={entry} />)
+            samples.map((entry) => <UserBillsTableEntry key={entry.id} entry={entry}/>)
           }
-        </div>
+          </div>
       </div>
     );
   }
-
 }
 
 export default UserBillsTable;

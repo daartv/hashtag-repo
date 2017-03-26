@@ -50,6 +50,15 @@ const style = {
     paddingRight: '2.5vw',
     verticalAlign: 'middle'
   },
+
+  navbar: {
+    width: '100vw',
+    position: 'absolute',
+    transform: 'translate(0px,2vh)',
+    paddingLeft: '0.5vw',
+    paddingRight: '0.5vw'
+  },
+
   rightBox: {
     top: '50%',
     display: 'table-cell',
@@ -117,12 +126,12 @@ const style = {
     fontColor: 'white'
   },
   footList: {
-    width: 'calc(100% / 8)',  
+    width: 'calc(100% / 8)',
     display: 'inline-block',
     verticalAlign: 'top',
     top: '10%',
     textAlign: 'center',
-    margin: '2%',    
+    margin: '2%',
     padding: '2%',
     color: 'white',
     fontWeight: '300'

@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import { Col } from 'react-bootstrap'
+import Paper from 'material-ui/Paper';
+
+const style = {
+  width: '50vw',
+  textAlign: 'center',
+  display: 'inline-block'
+};
 
 
 class UserSummary extends Component {
@@ -17,17 +23,15 @@ class UserSummary extends Component {
 
     return (
       <div>
-        <Col md={4}></Col>
-        <Col md={2}>
-          <div><h5>Total Owed</h5></div>
-          <div>{totalOwed}</div>
-        </Col>
-        <Col md={2}>
-          <div><h5>Bills Remaining</h5></div>
-          <div>{billsRemaining}</div>
-        </Col>
-        <Col md={4}></Col>
-      </div>
+        <div style={style}>
+          <h5>Total Owed</h5>
+          {totalOwed}
+        </div>
+        <div style={style}>
+          <h5>Bills Remaining</h5>
+          {billsRemaining}
+        </div>
+        </div>
     );
   }
 

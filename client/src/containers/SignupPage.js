@@ -7,7 +7,7 @@ class SignupPage extends Component {
 
     this.state = {
       accountExistsMessage: '',
-      
+
     };
 
     this._onSignUp = this._onSignUp.bind(this);
@@ -30,7 +30,7 @@ class SignupPage extends Component {
       data: JSON.stringify(userInfo),
       contentType: 'application/json',
       success: (data) => {
-        // this.setState({showUserPage: true});  
+        // this.setState({showUserPage: true});
         console.log('_onSignUp success', data);
         this.props.onSignIn(true);
       },
@@ -47,23 +47,23 @@ class SignupPage extends Component {
     return (
       <div className="signup-div" style={style.signUpDiv} >
         <h2>Sign Up</h2>
-        <form action="" method="" onSubmit={this._onSignUp}  > 
-          <input placeholder="First name" type="text" 
-            style={style.signUpFLName} ref={input => this.firstName = input} 
+        <form action="" method="" onSubmit={this._onSignUp}  >
+          <input placeholder="First name" type="text"
+            style={style.signUpFLName} ref={input => this.firstName = input}
             required/>
-          <input placeholder="Last name" type="text" 
+          <input placeholder="Last name" type="text"
             style={style.signUpFLName} ref={input => this.lastName = input}
             required/>
-          <input placeholder="Email" type="text" 
+          <input placeholder="Email" type="text"
             style={style.signUpInput} ref={input => this.email = input}
             required/>
-          <input placeholder="Username" type="text" 
+          <input placeholder="Username" type="text"
             style={style.signUpInput} ref={input => this.username = input}
             required/>
-          <input placeholder="Password" type="text" 
+          <input placeholder="Password" type="text"
             style={style.signUpInput} ref={input => this.password = input}
             required/>
-          <input className="createAccountButton" type="submit" value="Create Account" 
+          <input className="createAccountButton" type="submit" value="Create Account"
             style={style.createAccountButton} />
           <span style={style.signUpMessage}>{this.state.accountExistsMessage}</span>
         </form>
