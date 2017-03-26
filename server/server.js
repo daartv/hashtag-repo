@@ -48,10 +48,11 @@ app.post('/image', imgUpload.single('image'), (req, res) => {
     res.status(200).json(response)
   })
 })
-
+// app.get('/*', helper.checkUser);
 app.get('/users/checkStatus', helper.checkUser); 
 
 app.post('/users/signup', helper.userSignUp);
+app.post('/users/signin', helper.signInUser);
 
 app.listen(9000, () => {
   console.log('Ready and listening on port 9000')
