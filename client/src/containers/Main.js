@@ -14,11 +14,14 @@ const { container, heroStart, midSect, leftBox, rightBox, footer, heroInner,phon
 class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    }
+  }
+
+  componentDidMount(){
+   
   }
 
   render() {
+    
     return (
       <Grid fluid style={container}>
         <Row>
@@ -63,6 +66,11 @@ class Main extends Component {
                 <div style={footList}>4</div>
                 <div style={footList}>5</div>
                 <div style={footList}>6</div>
+          </div>
+        </Row>
+        <Row>
+          <div style={footer}>
+                {this.props.children}
           </div>
         </Row>
       </Grid>

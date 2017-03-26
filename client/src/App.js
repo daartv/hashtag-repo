@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Router, Route, Link, IndexRoute, IndexLink, hashHistory, browserHistory } from 'react-router';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
+import axios from 'axios';
+import $ from 'jQuery';
 
 import UserPage from './containers/UserPage';
 import LoginPage from './containers/LoginPage';
@@ -22,10 +23,29 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      signedIn: true
+      signedIn: true,
+      user: null
     }
+    this.checkUserLogged();
     this.requireAuth = this.requireAuth.bind(this);
     this._onSignIn = this._onSignIn.bind(this);
+  }
+
+  checkUserLogged (){
+    $.ajax({
+      type: 'GET',
+      url: '/users/checkStatus',
+      contentType: 'application/json',
+      success: (data) => {
+        // this.setState({showUserPage: true});  
+        console.log('WORKED', data);
+        this.setState({signedIn: data.signedIn});
+      },
+      error: (error) => {
+        console.log('_onSignUp error');
+        this.setState({accountExistsMessage: 'Account already exists. Use different username or email.'});
+      }
+    });
   }
 
   _onSignIn(signIn) {

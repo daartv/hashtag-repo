@@ -1,6 +1,6 @@
 //debtor schema
 // var mongoose = require('../server/node_modules/mongoose');
-var mongoose = require('../dbConfig');
+var mongoose = require('mongoose');
 var request = require('request');
 
 var debtorSchema = mongoose.Schema({

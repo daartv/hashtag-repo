@@ -22,6 +22,7 @@ class UserPage extends Component {
   }
 
   render() {
+    console.log(this.props.children);
     const { uploadBill } = this;
     return (
       <Grid fluid style={container}>
