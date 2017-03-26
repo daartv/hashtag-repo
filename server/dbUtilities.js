@@ -16,17 +16,27 @@ const fs = require('fs');
 //Password only needed if we aren't using Facebook oAuth.
   // MVP just using no oAuth and no encrypted PW.
 
-exports.renderIndex = function(req, res){
-  res.render('index');
+// exports.renderIndex = function(req, res){
+//   res.render('index');
+// }
+
+// exports.signUpUser = function(req, res){
+//   res.render('signUp');
+// }
+
+// exports.loginInUser = function(req, res){
+//   res.render('login');
+// }
+
+exports.checkUser = function(req, res){
+  let username = req.session.username;
+  if(username){
+    res.send({signedIn: true, user: username});
+  } else{
+    res.send({signedIn: false, user: ''});
+  }
 }
 
-exports.signUpUser = function(req, res){
-  res.render('signUp');
-}
-
-exports.loginInUser = function(req, res){
-  res.render('login');
-}
 
 exports.logoutUser = function(req, res){
   let username = req.session.username;
@@ -74,6 +84,7 @@ exports.signInUser = function(req, res) {
 
 
 exports.userSignUp = function(req, res) {
+  console.log('GOT TO SIGN UP')
   let username = req.body.username;
   let email = req.body.email;
 

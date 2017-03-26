@@ -1,5 +1,5 @@
 //bills schema
-var mongoose = require('../temp/dbConfig');
+var mongoose = require('mongoose');
 var request = require('request');
 
 
@@ -8,6 +8,7 @@ var billSchema = mongoose.Schema({
   name: String,
   owner: String,
   code: String,
+  date: String,
   amount: Number,
   debt: Number,
   image: {data: Buffer, contentType: String},
