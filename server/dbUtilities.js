@@ -28,12 +28,26 @@ const fs = require('fs');
 //   res.render('login');
 // }
 
-exports.checkUser = function(req, res){
+exports.checkUser = function(req, res){ 
   let username = req.session.username;
-  if(username){
-    res.send({signedIn: true, user: username});
+  console.log('session', username);
+  if(username){ 
+    User.findOne({username: username})
+      .exec(function(err, user){
+        if(user === null) {
+          // res.redirect('/login');
+          res.sendStatus(500);
+        } else {
+          req.session.username = user.username;
+          req.session.userID = user.id;
+          exports.createUserStorage(user.username);
+          // res.redirect('/profile/' + req.session.username);
+          res.send({signedIn: true, user: user});
+        }
+       })
+    // res.send({signedIn: true, user: username});
   } else{
-    res.send({signedIn: false, user: ''});
+    res.sendStatus(500);
   }
 }
 
@@ -65,19 +79,24 @@ exports.signInUser = function(req, res) {
   let username = req.body.username;
   let pw = req.body.password;
 
-  if(req.session.username){
-    res.redirect('/profile/' + req.session.username);
-  }
+
+  // if(req.session.username){
+  //   res.redirect('/profile/' + req.session.username);
+  // }
 
    User.findOne({username: username, password: pw})
    .exec(function(err, user){
     if(user === null) {
-      res.redirect('/login');
+      console.log('no user  found on signin');
+      // res.redirect('/login');
+      res.sendStatus(500);
     } else {
+      console.log('user  found on signin', user);
       req.session.username = user.username;
       req.session.userID = user.id;
       exports.createUserStorage(user.username);
-      res.redirect('/profile/' + req.session.username);
+      // res.redirect('/profile/' + req.session.username);
+      res.send(user);
     }
    })
 };
@@ -212,7 +231,9 @@ exports.addBill = function(req, res) {
 //Create a temp directory and store bill images for user once they sign in
 exports.createUserStorage = function(username){
   let newDir = path.join(__dirname, '../dist') + '/' + username;
-  fs.mkdirSync(newDir);
+  if (!fs.existsSync(newDir)){ //checks if dir exist
+    fs.mkdirSync(newDir);
+  }
 }
 
 exports.createBillImages = function(user, bills){

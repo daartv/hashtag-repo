@@ -20,69 +20,70 @@ class App extends Component {
     super(props)
 
     this.state = {
-      signedIn: true,
+      signedIn: false,
       user: null
     }
-    this.isLoggedIn();
-    this.requireAuth = this.requireAuth.bind(this);
+    // this.isLoggedIn();
+    // this.requireAuth = this.requireAuth.bind(this);
     this._onSignIn = this._onSignIn.bind(this);
   }
 
 
   /* * * UNTIL WE ARE CORRECTLY CHECKING THE SESSION, ALTER THE RETURN VALUE TO MIMIC A VALID OR INVALID SESSION * * * */
   isLoggedIn (){
-      return false
-    // $.ajax({
-    //   type: 'GET',
-    //   url: '/users/checkStatus',
-    //   contentType: 'application/json',
-    //   success: (data) => {
-    //     // this.setState({showUserPage: true});
-    //     console.log('WORKED', data);
-        // this.setState({signedIn: data.signedIn});
-    //   },
-    //   error: (error) => {
-    //     console.log('_onSignUp error');
-    //     this.setState({accountExistsMessage: 'Account already exists. Use different username or email.'});
-    //   }
-    // });
-  }
-
-  _onSignIn(signIn) {
-    if (signIn) {
-      this.setState({signedIn: signIn});
+    // return this.state.signedIn;
+    if (this.state.signedIn) {
+      return true;
+    } {
+      $.ajax({
+        type: 'GET',
+        url: '/users/checkStatus',
+        contentType: 'application/json',
+        success: (data) => {  
+          // console.log('WORKED', data);
+          this.setState({signedIn: data.signedIn, user: data.user});
+        },
+        error: (error) => {
+          console.log('checkUserLogged: user has no session');
+          // this.setState({accountExistsMessage: 'Account already exists. Use different username or email.'});
+        }
+      });
     }
   }
 
-  requireAuth(nextState, replace) {
-  if (!this.state.signedIn) {
-    replace({
-      pathname: '/login'
-    })
-  }
-}
-
-checkSession() {
-  if (this.isLoggedIn()) {
-    return <Redirect to='/home'/>;
-  } else {
-    return <Main />;
+  _onSignIn(signIn, user) {  
+    if (signIn) {  
+      this.setState({signedIn: signIn, user: user});
+    }
   }
 
-}
+  // requireAuth(nextState, replace) {
+  //   if (!this.state.signedIn) {
+  //     replace({
+  //       pathname: '/login'
+  //     })
+  //   }
+  // }
 
-componentDidMount() {
-    // console.log(UserPage);
+  checkSession() { 
+    if (this.isLoggedIn()) {
+      return <Redirect to='/home'/>;
+    } else {
+      return <Main  signedIn={this.state.signedIn} onSignIn={this._onSignIn}  />;
+    }
+
+  }
+
+  componentDidMount() {
+      
   }
 
   render () {
     return (
       <Router>
         <div>
-          <Route exact path='/' render={this.checkSession.bind(this)}/>
-          <Route path='/home' component={UserPage}/>
-          <Route path='/home/' render={this.checkSession.bind(this)}/>
-          <Route path='/login' component={LoginPage} />
+          <Route path='/' render={this.checkSession.bind(this)} />
+          <Route exact path='/home' component={UserPage}/>      
           <Route path='/signup' component={SignupPage} />
         </div>
       </Router>
@@ -92,3 +93,18 @@ componentDidMount() {
 
 export default App
 
+/* Backup
+
+return (
+  <Router>
+    <div>
+      <Route exact path='/' render={this.checkSession.bind(this)}/>
+      <Route path='/home' component={UserPage}/>
+      <Route path='/home/' render={this.checkSession.bind(this)}/>
+      <Route path='/login' component={LoginPage} />
+      <Route path='/signup' component={SignupPage} />
+    </div>
+  </Router>
+);
+
+*/

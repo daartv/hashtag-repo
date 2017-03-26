@@ -1,4 +1,4 @@
-const imgURL = 'http://www.summitskinandveincare.com/wp-content/uploads/2015/09/bigstock-Group-Of-Friends-Meeting-For-L-59135003.jpg'
+const imgURL = '../assets/images/bigstock-Group-Of-Friends-Meeting-For-L-59135003.jpg'
 const style = {
 
   container: {
