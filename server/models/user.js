@@ -9,7 +9,7 @@ var userSchema = mongoose.Schema({
   lastName: String,
   email: {type: String, index: { unique: true }},
   password: String,
-  bills: [{id: String, code: String}]
+  bills: [{billId: String, code: String}]
 });
 
 var User = mongoose.model('User', userSchema);
