@@ -1,12 +1,31 @@
-
-
 import React, {Component} from 'react'
 import { Form, FormGroup, InputGroup, FormControl, Button, Col, DropdownButton, MenuItem } from 'react-bootstrap'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
+import Drawer from 'material-ui/Drawer';
+import AppBar from 'material-ui/AppBar';
+import RaisedButton from 'material-ui/RaisedButton';
+
+
+import FlatButton from 'material-ui/FlatButton';
+import Toggle from 'material-ui/Toggle';
+
 import AddFriends from './AddBill'
 import AddBillForm from '../components/AddBillForm'
 import BillProgress from '../components/BillProgress'
 import BillStats from '../components/BillTable'
 import FinalizeBill from '../components/FinalizeBill'
+
+const style = {
+  form: {
+    width: '50vw'
+  },
+  img: {
+    maxWidth: '100%',
+    maxHeight: '100%',
+    objectFit: 'contain'
+  }
+}
 
 class AddNewBill extends Component {
   constructor(props) {
@@ -19,7 +38,9 @@ class AddNewBill extends Component {
       manualBill: true,
       finished: false,
       imagePath: '',
-      stepIndex: 0
+      stepIndex: 0,
+      billAction: 'Show Bill',
+      open: false
     }
     console.log(this.state.currentBill);
     this.handleBillSubmit = this.handleBillSubmit.bind(this);
@@ -103,17 +124,27 @@ class AddNewBill extends Component {
         url: '/users/submitbill',
         data: JSON.stringify(bill),
         contentType: 'application/json',
-        success: (data) => { 
+        success: (data) => {
           console.log('Bill Added', data);
         },
-        error: (error) => {        
+        error: (error) => {
           console.log('bill Sign In Error', error);
         }
       });
     }
 
+  handleToggle() {
+    this.setState({
+      open: !this.state.open,
+      billAction: 'Hide Bill'
+    })
+  };
+
+
   render() {
     const {currentBill, currentFriends} = this.state
+    const { uploadedBill } = this.props
+    const { form, img } = style
 
     let formRender = this.state.stepIndex === 0 ? <AddBillForm addBill={this.addBill} currentBill={this.state.currentBill} /> : this.state.stepIndex === 1 ? <AddFriends addFriend={this.addFriend} currentFriends={this.state.currentFriends} handleAllFriends={this.submitFriends}/> : <FinalizeBill customSettings={this.customSettings} submitBill={this.handleBillSubmit}/>;
 
@@ -132,16 +163,27 @@ class AddNewBill extends Component {
       deselectOnClickaway: true,
       showCheckboxes: false
     }
-  
+
     return (
-      <div> 
+      <div style={form}>
+      <div>
       <div>
       <BillStats styleProps={styleProps} debtors={currentFriends} billStats={currentBill}/>
       </div>
       <div>
       <BillProgress handlePrev={this.handlePrev} getStepContent={this.getStepContent} currStep={formRender} handleNext={this.handleNext} passedState={passedState}/>
-      <div>   
+      <div>
       </div>
+      </div>
+      </div>
+      <div>
+        <RaisedButton
+          label={this.state.billAction}
+          onTouchTap={this.handleToggle.bind(this)}
+        />
+        <Drawer width={'700'} openSecondary={true} open={this.state.open} >
+        <img style={img} src={uploadedBill}/>
+        </Drawer>
       </div>
       </div>
     )
@@ -149,3 +191,4 @@ class AddNewBill extends Component {
 }
 
 export default AddNewBill
+
