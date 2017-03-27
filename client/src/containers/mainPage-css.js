@@ -7,7 +7,7 @@ const style = {
     width: '100%',
     minWidth: '600px',
     maxWidth: '100%',
-    paddingTop: '4.5vh',
+    paddingTop: '2.5vh',
     // paddingLeft: '2.5vh',
     // paddingRight: '2.5vh',
     margin: '0 auto'
@@ -18,7 +18,7 @@ const style = {
     backgroundImage: 'url(' + imgURL + ')',
     backgroundSize: 'cover',
     width: '100%',
-    paddingTop: '3vh',
+    paddingTop: '2vh',
     paddingBottom: '3vh',
     paddingLeft: '2.5vw',
     paddingRight: '2.5vw',
@@ -90,10 +90,11 @@ const style = {
     backgroundColor: 'rgba(255, 255, 255, 0.0)',
     height: '30vh',
     width: '50%',
-    paddingTop: '1vh',
-    paddingLeft: '2.5vw',
+    paddingTop: '.5vh',
+    paddingLeft: '3.5vw',
     paddingRight: '1.5vw',
-    textAlign: 'center'
+    textAlign: 'center',
+    verticalAlign: 'top'
   },
   topicRight: {
     display: 'inline-block',
@@ -101,9 +102,9 @@ const style = {
     height: '30vh',
     width: '50%',
     maxHeight: '30vh',
-    paddingTop: '1vh',
+    paddingTop: '2.5vh',
     paddingLeft: '1.5vw',
-    paddingRight: '2.5vw',
+    paddingRight: '3.5vw',
     textAlign: 'center'
   },
   divider: {
@@ -135,6 +136,9 @@ const style = {
     padding: '2%',
     color: 'white',
     fontWeight: '300'
+  },
+  h3: {
+    marginTop: '0px'
   }
 }
 
