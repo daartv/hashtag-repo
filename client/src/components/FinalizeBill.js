@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
@@ -21,10 +20,14 @@ class FinalizeBill extends Component {
   constructor(props) {
       super(props);
     console.log(props);
-    
-
+    this.submitFinalBill = this.submitFinalBill.bind(this);
   }
 
+  submitFinalBill(event){
+    event.preventDefault();
+    console.log('got HERE YOU DUMMY');
+    this.props.submitBill();
+  }
 
   render() {
    return (
@@ -50,14 +53,13 @@ class FinalizeBill extends Component {
       style={styles.checkbox}
     />
 
-
     
    </Col>
     </Row>
     <Row>
     <FormGroup>
           <Col>
-            <Button onClick={this.handleSubmitBill} type='Finalize Bill'>
+            <Button onClick={this.submitFinalBill} type='Finalize Bill'>
               Submit Bill
             </Button> 
           </Col>
@@ -71,4 +73,3 @@ class FinalizeBill extends Component {
 }
 }
 export default FinalizeBill
-

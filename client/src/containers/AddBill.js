@@ -1,5 +1,3 @@
- // TEMPLATE
-
 import React, { Component } from 'react'
 import { Form, FormGroup, InputGroup, FormControl, Button, Col, DropdownButton, MenuItem } from 'react-bootstrap'
 
@@ -77,4 +75,3 @@ class AddFriends extends Component {
 }
 
 export default AddFriends
-

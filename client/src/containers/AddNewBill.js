@@ -1,3 +1,5 @@
+
+
 import React, {Component} from 'react'
 import { Form, FormGroup, InputGroup, FormControl, Button, Col, DropdownButton, MenuItem } from 'react-bootstrap'
 import AddFriends from './AddBill'
@@ -16,6 +18,7 @@ class AddNewBill extends Component {
       currentFriends: undefined,
       manualBill: true,
       finished: false,
+      imagePath: '',
       stepIndex: 0
     }
     console.log(this.state.currentBill);
@@ -36,14 +39,14 @@ class AddNewBill extends Component {
     });
   }
 
-  addFriend(friendsInfo){
+  addFriend(debtorsInfo){
     if(this.state.currentFriends !== undefined){
       this.setState( (state) => {
-        state.currentFriends = state.currentFriends.concat([friendsInfo]);
+        state.currentFriends = state.currentFriends.concat([debtorsInfo]);
         return state;
      })
     } else {
-      this.setState({currentFriends: [friendsInfo]}, function(){
+      this.setState({currentFriends: [debtorsInfo]}, function(){
         console.log('you added a friend', this.state.currentFriends);
       });
     }
@@ -81,29 +84,38 @@ class AddNewBill extends Component {
         return 'You\'re a long way from home sonny jim!';
     }
   }
-  handleBillSubmit(event){
 
+  handleBillSubmit(){
+    let totalDebt = this.state.currentFriends.reduce(function(accum, friend){
+      return accum += friend.debtAmount;
+    }, 0);
+
+    let bill = {
+      billName: this.state.currentBill.billName,
+      code: this.state.currentBill.billCode,
+      totalAmount: this.state.currentBill.billTotal,
+      totalDebt: totalDebt,
+      image: this.state.imagePath,
+      debtors: this.state.currentFriends
+    }
       $.ajax({
         type: 'POST',
-        url: '/users/submitBill',
-        data: JSON.stringify(userInfo),
+        url: '/users/submitbill',
+        data: JSON.stringify(bill),
         contentType: 'application/json',
-        success: (data) => {
-          console.log('_onSignIn success', data);
-          this.props.onSignIn(true, data);
+        success: (data) => { 
+          console.log('Bill Added', data);
         },
-        error: (error) => {
-          // console.log('_onSignIn error');
-          this.signInUsername.value = '';
-          this.signInPassword.value = '';
-          this.setState({ target: event.target, show: !this.state.show }); //for popover
+        error: (error) => {        
+          console.log('bill Sign In Error', error);
         }
       });
     }
+
   render() {
-    const { uploadedBill } = this.props;
     const {currentBill, currentFriends} = this.state
-    let formRender = this.state.stepIndex === 0 ? <AddBillForm addBill={this.addBill} currentBill={this.state.currentBill} /> : this.state.stepIndex === 1 ? <AddFriends addFriend={this.addFriend} currentFriends={this.state.currentFriends} handleAllFriends={this.submitFriends}/> : <FinalizeBill customSettings={this.customSettings} submitBill={this.submitBill}/>;
+
+    let formRender = this.state.stepIndex === 0 ? <AddBillForm addBill={this.addBill} currentBill={this.state.currentBill} /> : this.state.stepIndex === 1 ? <AddFriends addFriend={this.addFriend} currentFriends={this.state.currentFriends} handleAllFriends={this.submitFriends}/> : <FinalizeBill customSettings={this.customSettings} submitBill={this.handleBillSubmit}/>;
 
     const passedState = {
       stepIndex: this.state.stepIndex,
@@ -120,15 +132,15 @@ class AddNewBill extends Component {
       deselectOnClickaway: true,
       showCheckboxes: false
     }
-
+  
     return (
-      <div>
+      <div> 
       <div>
       <BillStats styleProps={styleProps} debtors={currentFriends} billStats={currentBill}/>
       </div>
       <div>
       <BillProgress handlePrev={this.handlePrev} getStepContent={this.getStepContent} currStep={formRender} handleNext={this.handleNext} passedState={passedState}/>
-      <div>
+      <div>   
       </div>
       </div>
       </div>
