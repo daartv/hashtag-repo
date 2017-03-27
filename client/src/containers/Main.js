@@ -7,7 +7,6 @@ import Style from './mainPage-css';
 const { container, heroStart, midSect, leftBox, navbar, rightBox, footer, heroInner, phonePhoto, topicLeft, topicRight, divider, footList } = Style
 
 class Main extends Component {
-
   componentWillMount(){
     console.log('main', this.props)
   }

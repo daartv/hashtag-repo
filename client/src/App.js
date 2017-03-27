@@ -40,7 +40,7 @@ class App extends Component {
         url: '/users/checkStatus',
         contentType: 'application/json',
         success: (data) => {
-          // console.log('WORKED', data);
+          console.log('WORKED', data);
           this.setState({signedIn: data.signedIn, user: data.user});
         },
         error: (error) => {

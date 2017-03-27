@@ -30,9 +30,8 @@ const style = {
 class AddNewBill extends Component {
   constructor(props) {
       super(props);
-    console.log(props);
     this.state = {
-      uploadedBill: '',
+      uploadedBill: this.props.uploadedBill,
       currentBill: undefined,
       currentFriends: undefined,
       manualBill: true,
@@ -40,9 +39,9 @@ class AddNewBill extends Component {
       imagePath: '',
       stepIndex: 0,
       billAction: 'Show Bill',
-      open: false
+      open: false,
+      billCode: 3
     }
-    console.log(this.state.currentBill);
     this.handleBillSubmit = this.handleBillSubmit.bind(this);
     this.addBill = this.addBill.bind(this);
     this.addFriend = this.addFriend.bind(this);
@@ -107,28 +106,31 @@ class AddNewBill extends Component {
   }
 
   handleBillSubmit(){
-    let totalDebt = this.state.currentFriends.reduce(function(accum, friend){
+    let totalDebts = this.state.currentFriends.reduce(function(accum, friend){
       return accum += friend.debtAmount;
     }, 0);
+    let imgData = this.state.uploadedBill.split('base64,')[1];
 
-    let bill = {
+    const sendData = {
+      bill : {
       billName: this.state.currentBill.billName,
       code: this.state.currentBill.billCode,
       totalAmount: this.state.currentBill.billTotal,
-      totalDebt: totalDebt,
-      image: this.state.imagePath,
+      totalDebt: totalDebts,
+      image: imgData,
       debtors: this.state.currentFriends
     }
+  };
       $.ajax({
         type: 'POST',
         url: '/users/submitbill',
-        data: JSON.stringify(bill),
+        data: JSON.stringify(sendData),
         contentType: 'application/json',
         success: (data) => {
           console.log('Bill Added', data);
         },
         error: (error) => {
-          console.log('bill Sign In Error', error);
+          console.log('bill not added', error);
         }
       });
     }

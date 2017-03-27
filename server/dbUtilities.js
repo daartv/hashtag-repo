@@ -40,6 +40,7 @@ exports.checkUser = function(req, res){
           // res.redirect('/login');
           res.sendStatus(500);
         } else {
+          
           req.session.username = user.username;
           req.session.userID = user.id;
           exports.createUserStorage(user.username);
@@ -99,11 +100,11 @@ exports.signInUser = function(req, res) {
    User.findOne({username: username, password: pw})
    .exec(function(err, user){
     if(user === null) {
-      console.log('no user  found on signin');
+      console.log('no user found on signin');
       // res.redirect('/login');
       res.sendStatus(500);
     } else {
-      console.log('user  found on signin', user);
+      console.log('user found on signin', user);
       req.session.username = user.username;
       req.session.userID = user.id;
       exports.createUserStorage(user.username);
@@ -115,7 +116,6 @@ exports.signInUser = function(req, res) {
 
 
 exports.userSignUp = function(req, res) {
-  console.log('GOT TO SIGN UP')
   let username = req.body.username;
   let email = req.body.email;
 
@@ -189,25 +189,6 @@ exports.selectDebtors = function(debtors){
 
 // on addBill ajax request, please create an object with bill property and  username
 exports.addBill = function(req, res) {
-
-  /** TEST DATA **
-  var testBill = {
-    name: 'Restaurant Bill',
-    owner: 'Steve',
-    code: 'Food',
-    date: Date.now(),
-    amount: 250.00,
-    debt: 250.00,
-    image: '',
-    debtors: [{fName: 'Caspar', lName: 'Jones', email: 'cj@hotmail.com', owed: 100}]
-  };
-  
-  req.body = {bill: testBill};
-  req.body.username = 'user7';
-  req.session = {username:'Steve'};
-   
-  ** TEST DATA **/
-  console.log('BILL BODY', req.body);
   let debtors = exports.selectDebtors(req.body.bill.debtors);
   Promise.all(debtors)
   .then(values => {
@@ -225,7 +206,7 @@ exports.addBill = function(req, res) {
       code: debtorsInfo.code,
       amount: debtorsInfo.totalAmount,
       debt: debtorsInfo.totalDebt,
-      image: 'http://www.pngpix.com/wp-content/uploads/2016/04/Iphone-PNG-Image.png',
+      image: debtorsInfo.image,
       debtors: debtorArr
     });
     
@@ -233,11 +214,11 @@ exports.addBill = function(req, res) {
     .then(newbill => {
       User.findOne({ username: req.session.username }).exec()
       .then(user => {
-        user.bills.push({billId: newbill._id, code: newbill.code, date: newbill.date});
+        user.bills.push({billId: newbill._id, code: newbill.code});
         user.save()
           .then(user => {
             console.log('last cl: user', user);
-            fs.unlink('./temp/' + req.file.billPhoto.path);
+            // fs.unlink('./temp/' + req.file.billPhoto.path);
             res.send(user);
           })
           .catch(err => {
