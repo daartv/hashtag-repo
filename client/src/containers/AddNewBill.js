@@ -52,10 +52,8 @@ class AddNewBill extends Component {
   }
 
   addBill(billInfo){
-    console.log('GOT HERE BRUH', billInfo);
     this.setState({currentBill: billInfo}, function(){
      this.handleNext();
-     console.log('THIS IS THE CURRENT BILL', this.state.currentBill)
     });
   }
 

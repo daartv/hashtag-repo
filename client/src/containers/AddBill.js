@@ -63,7 +63,7 @@ class AddFriends extends Component {
             <Button onClick={this.handleAddFriend} type='Add to bill'>
               Add Friend
             </Button> 
-            <Button onClick={this.handleSubmitFriends} type='Add Friends'>
+            <Button style={{'marginLeft': '5px'}} onClick={this.handleSubmitFriends} type='Add Friends'>
               Continue to Review Bill
             </Button>
           </Col>

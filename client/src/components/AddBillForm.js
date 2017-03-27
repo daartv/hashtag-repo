@@ -5,7 +5,6 @@ import { Form, FormGroup, InputGroup, FormControl, Button, Col, DropdownButton, 
 class AddBillForm extends Component {
   constructor(props) {
       super(props);
-    console.log(props);
     this.handleBillSubmit = this.handleBillSubmit.bind(this);
     this.handleAddBill = this.handleAddBill.bind(this);
   }
@@ -18,7 +17,6 @@ class AddBillForm extends Component {
       billName: this.billName.value,
       billTotal: this.billTotal.value
     }
-    console.log(billInfo)
     this.props.addBill(billInfo);
   }
 
