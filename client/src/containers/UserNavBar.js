@@ -17,13 +17,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 import NewBillButton from '../components/NewBillButton'
+import LogoutButton from '../components/LogoutButton'
 import FriendsButton from '../components/FriendsButton'
 import NavDropMenu from '../components/NavDropMenu'
 
 
 class UserNavBar extends Component {
   render () {
-    const { uploadBill } = this.props
+    const { uploadBill, logOut } = this.props
 
     return (
       <Toolbar>
@@ -31,7 +32,8 @@ class UserNavBar extends Component {
           <ToolbarTitle text='Splitly' />
         </ToolbarGroup>
         <ToolbarGroup>
-          <FlatButton label='New Bill' uploadBill={uploadBill}/>
+          <Link to="/"><LogoutButton logOut={logOut}/></Link>
+          <Link to="/home/addnewbill"><FlatButton label='New Bill' uploadBill={uploadBill}/></Link>
           <FriendsButton />
           <NavDropMenu/>
         </ToolbarGroup>

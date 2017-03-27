@@ -69,7 +69,7 @@ class App extends Component {
     if (this.isLoggedIn()) {
       return <Redirect to='/home'/>;
     } else {
-      return <Main  signedIn={this.state.signedIn} onSignIn={this._onSignIn}  />;
+      return <Main signedIn={this.state.signedIn} onSignIn={this._onSignIn}  />;
     }
 
   }
