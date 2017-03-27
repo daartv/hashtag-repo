@@ -15,7 +15,7 @@ class Main extends Component {
   render() {
 
     return (
-      <div >
+      <div>
       <MainNavBar signedIn={this.props.signedIn} onSignIn={this.props.onSignIn} />
         <div style={heroStart}>
         <div style={heroInner}>
@@ -25,17 +25,15 @@ class Main extends Component {
             <div style={{"display": "block"}}>
             <img style={phonePhoto} src="../assets/images/Iphone-PNG-Image.png"/>
             </div>
-            <p> Write all the things </p>
+            <p style={{"textAlign": "center", "fontSize": "14px"}}> Introducing Splitly, an easier way to keep track of and settle bills among friends. </p>
           </div>
           <div style={rightBox}/>
         </div>
       </div>
       <div style={midSect}>
+      <h2 style={{"textAlign": "center", "fontSize": "30px"}}>Splitly</h2>
+      <h3 style={{"textAlign": "center", "fontSize": "18px"}}>Split checks, without the awkwardness.</h3>
 
-
-        <Link to='/home'><h1>User settings</h1></Link>
-
-      <h3 style={{"textAlign": "center", "fontSize": "14px"}}>Split checks, without the awkwardness.</h3>
       </div>
       </div>
     )
