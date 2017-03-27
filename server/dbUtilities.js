@@ -50,27 +50,38 @@ exports.checkUser = function(req, res){
        })
     // res.send({signedIn: true, user: username});
   } else{
-    res.sendStatus(500);
+    res.redirect('/');
   }
 }
 
 
+exports.deleteFolderRecursive = function (userDir) {
+    if( fs.existsSync(userDir) ) {
+      fs.readdirSync(userDir).forEach(function(file) {
+        var curPath = userDir + "/" + file;
+          if(fs.statSync(curPath).isDirectory()) { // recurse
+              exports.deleteFolderRecursive(curPath);
+          } else { // delete file
+              fs.unlinkSync(curPath);
+          }
+      });
+      fs.rmdirSync(userDir);
+    }
+  }
+
 exports.logoutUser = function(req, res){
   let username = req.session.username;
+  console.log(username);
   if(username !== null){
-    let userDir = __dirname + '/' + username;
-    fs.unlink(userDir, function(err){
-      if(err){
-        console.log('error');
-      }
-      req.session.destroy(function(){
-      res.redirect('/login');
-  })
+    let userDir = path.join(__dirname, '../dist') + '/' + username;
+    Promise.resolve(exports.deleteFolderRecursive(userDir))
+  .then(function(){
+    req.session.destroy(function (err) {
+    if (err) return next(err)
     })
+  })
   }
-    else {
-      res.redirect('/login');
-    }
+  res.redirect('/')
 };
 
 exports.userBills = function(req, res){
