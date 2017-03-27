@@ -13,6 +13,9 @@ const Bill = require('./models/bills');
 const Debtor = require('./models/debtor');
 const fs = require('fs');
 
+// const mongoose = require('mongoose');
+// mongoose.Promise = require('bluebird');
+
 //Password only needed if we aren't using Facebook oAuth.
   // MVP just using no oAuth and no encrypted PW.
 
@@ -154,79 +157,99 @@ exports.selectDebtors = function(debtors){
   return debtors.map(debtor => {
     return Debtor.findOne({email: debtor.email})
       .exec(function(err, debt){
-      if(debt === null){
-        let newDebtor = new Debtor({
-        firstName: debtor.fName,
-        lastName: debtor.lName,
-        email: debtor.email
-      });
-        newDebtor.save(function(err, newDebtor){
-          if(err){
-            res.status(500).send(err)
-          }
-          return newDebtor.id;
-        })
-      } else {
-        return debt.id;
-      }
-    })
+        let newDebtor;
+        if(debt === null){
+          newDebtor = new Debtor({
+            firstName: debtor.fName,
+            lastName: debtor.lName,
+            email: debtor.email
+          });
+          newDebtor.save(function(err, newdebtor){
+            if(err){
+              res.status(500).send(err)
+            }
+            return newdebtor;
+          })
+        } else {        
+          return debt;
+        }
+      })
   });
+
 }
 
-//this is quite complex actually...
-  //so, if we do have a debtors collection, it would allow us to store ids of debtors rather than inserting all info... that said, info in each is only 6 fields maybe...
+// on addBill ajax request, please create an object with bill property and  username
 exports.addBill = function(req, res) {
 
-  if(req.session.username === null){
-    res.redirect('/login');
-  }
+  /** TEST DATA **
+  var testBill = {
+    name: 'Restaurant Bill',
+    owner: 'Steve',
+    code: 'Food',
+    date: Date.now(),
+    amount: 250.00,
+    debt: 250.00,
+    image: '',
+    debtors: [{fName: 'Caspar', lName: 'Jones', email: 'cj@hotmail.com', owed: 100}]
+  };
+  
+  req.body = {bill: testBill};
+  req.body.username = 'user7';
+  req.session = {username:'Steve'};
+   
+  ** TEST DATA **/
 
-  let imageInfo = {
-    data: fs.readFileSync(req.file.billPhoto.path),
-    contentType: 'image/jpg'
-  }
-  exports.selectDebtors(req.body.debtors)
-  .then(function(debtorIds){
-    let billDebtors = debtorIds.map((id, ind) => {
-      return {
-      id: id,
-      owed: req.body.debtors[ind].owed,
-      paidAmount: req.body.debtors[ind].paid
-      }
-    });
+  let debtors = exports.selectDebtors(req.body.bill.debtors);
+  Promise.all(debtors)
+  .then(values => {
+    let debtorArr = [];
+    const debtorsInfo = req.body.bill;
+    // adding new properties to the debtors objects
+    for ( var i = 0; i < values.length; i++ ) {
+      debtorArr.push({debtorId: values[i]._id, owed: debtorsInfo.debtors[i].owed, paidAmount: 0});
+    }
 
     let newBill = new Bill({
-      name: req.body.billName,
+      name: debtorsInfo.billName,
       owner: req.session.username,
-      code: req.body.code,
-      amount: req.body.totalAmount,
-      debt: req.body.totalAmount,
-      image: imageInfo,
-      debtors: [billDebtors]
+      code: debtorsInfo.code,
+      amount: debtorsInfo.totalAmount,
+      debt: debtorsInfo.totalAmount,
+      image: 'http://www.pngpix.com/wp-content/uploads/2016/04/Iphone-PNG-Image.png',
+      debtors: debtorArr
     });
-
-    newBill.save(function(err, newBill){
-      if(err){
-        res.status(500).send(err)
-      }
-      return newBill
+    
+    newBill.save()
+    .then(newbill => {
+      User.findOne({ username: req.body.username }).exec()
+      .then(user => {
+        user.bills.push({billId: newbill._id, code: newbill.code});
+        user.save()
+          .then(user => {
+            console.log('last cl: user', user);
+            fs.unlink('./temp/' + req.file.billPhoto.path);
+            res.send(user);
+          })
+          .catch(err => {
+            console.log('user.bills.push error:', err);
+            res.sendStatus(500);
+          });
+      })
+      .catch(err => {
+        console.log('User.findOne error:', err);
+        res.sendStatus(500);
+      });
     })
-    .exec(function(err, newBill){
-       User.aggregate([
-         { $match: { username: req.body.username } },
-         { $push: {bills: newBill.id} }
-       ])
-    .exec(function(err, user){
-      if(err){
-        res.status(500).send(err)
-      } else {
-        fs.unlink('./temp/' + req.file.billPhoto.path);
-        res.send(user);
-      }
+    .catch(err => {
+      console.log('newBill.save error:', err);
+      res.sendStatus(500);
     });
-    });
+  })
+  .catch(err => {
+    console.log('newBill.save error:', err);
+    res.sendStatus(500);
   });
-};
+}
 
 //Create a temp directory and store bill images for user once they sign in
 exports.createUserStorage = function(username){
