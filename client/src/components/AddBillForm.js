@@ -2,6 +2,14 @@
 import React, {Component} from 'react'
 import { Form, FormGroup, InputGroup, FormControl, Button, Col, DropdownButton, MenuItem } from 'react-bootstrap'
 
+const style = {
+  toggleButton: {
+    backgroundColor: 'rgb(0, 150, 136)',
+    color: 'white',
+    marginLeft: '5px'
+  }
+}
+
 class AddBillForm extends Component {
   constructor(props) {
       super(props);
@@ -29,6 +37,8 @@ class AddBillForm extends Component {
     const month = dateObj.getUTCMonth() + 1; //months from 1-12
     const day = dateObj.getUTCDate();
     const year = dateObj.getUTCFullYear();
+    const { billAction, toggleBill } = this.props;
+    const { toggleButton } = style;
 
     const newdate = day + "/" + month + "/" + year;
 
@@ -55,9 +65,12 @@ class AddBillForm extends Component {
         </FormGroup>
         <FormGroup>
           <Col>
+          <div>
             <Button type='Add New Bill' onClick={this.handleAddBill}>
               Add New Bill
             </Button>
+            <Button type='Toggle Bill' style={toggleButton} onClick={toggleBill}>{billAction}</Button>
+            </div>
           </Col>
         </FormGroup>
       </Form>

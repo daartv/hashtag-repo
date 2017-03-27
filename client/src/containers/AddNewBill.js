@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 import { Form, FormGroup, InputGroup, FormControl, Button, Col, DropdownButton, MenuItem } from 'react-bootstrap'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
@@ -10,14 +10,18 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 
-import AddFriends from './AddBill'
+import AddFriendsToBill from './AddFriendsToBill'
 import AddBillForm from '../components/AddBillForm'
 import BillProgress from '../components/BillProgress'
 import BillStats from '../components/BillTable'
 import FinalizeBill from '../components/FinalizeBill'
 
 const style = {
-  form: {
+  formCenter: {
+    margin: 'auto',
+    width: '50vw'
+  },
+  formSide: {
     width: '50vw'
   },
   img: {
@@ -39,7 +43,7 @@ class AddNewBill extends Component {
       imagePath: '',
       stepIndex: 0,
       billAction: 'Show Bill',
-      open: false,
+      drawerOpen: false,
       billCode: 3
     }
     this.handleBillSubmit = this.handleBillSubmit.bind(this);
@@ -104,6 +108,7 @@ class AddNewBill extends Component {
   }
 
   handleBillSubmit(){
+    let self = this;
     let totalDebts = this.state.currentFriends.reduce(function(accum, friend){
       return accum += friend.debtAmount;
     }, 0);
@@ -126,17 +131,20 @@ class AddNewBill extends Component {
         contentType: 'application/json',
         success: (data) => {
           console.log('Bill Added', data);
+          self.context.router.history.push('/home')
         },
         error: (error) => {
           console.log('bill not added', error);
+          self.context.router.history.push('/home')
         }
       });
     }
 
-  handleToggle() {
+  toggleBill() {
+
     this.setState({
-      open: !this.state.open,
-      billAction: 'Hide Bill'
+      drawerOpen: !this.state.drawerOpen,
+      billAction: this.state.drawerOpen ? 'Show Bill' : 'Hide Bill'
     })
   };
 
@@ -144,10 +152,9 @@ class AddNewBill extends Component {
   render() {
     const {currentBill, currentFriends} = this.state
     const { uploadedBill } = this.props
-    const { form, img } = style
+    const { formCenter, formSide, img } = style
 
-    let formRender = this.state.stepIndex === 0 ? <AddBillForm addBill={this.addBill} currentBill={this.state.currentBill} /> : this.state.stepIndex === 1 ? <AddFriends addFriend={this.addFriend} currentFriends={this.state.currentFriends} handleAllFriends={this.submitFriends}/> : <FinalizeBill customSettings={this.customSettings} submitBill={this.handleBillSubmit}/>;
-
+    let formRender = this.state.stepIndex === 0 ? <AddBillForm addBill={this.addBill} currentBill={this.state.currentBill} toggleBill={this.toggleBill.bind(this)} billAction={this.state.billAction} /> : this.state.stepIndex === 1 ? <AddFriendsToBill addFriend={this.addFriend} currentFriends={this.state.currentFriends} handleAllFriends={this.submitFriends} toggleBill={this.toggleBill.bind(this)} billAction={this.state.billAction} /> : <FinalizeBill customSettings={this.customSettings} submitBill={this.handleBillSubmit} toggleBill={this.toggleBill.bind(this)} billAction={this.state.billAction} />;
     const passedState = {
       stepIndex: this.state.stepIndex,
       finished: this.state.finished
@@ -165,7 +172,7 @@ class AddNewBill extends Component {
     }
 
     return (
-      <div style={form}>
+      <div style={this.state.drawerOpen ? formSide : formCenter }>
       <div>
       <div>
       <BillStats styleProps={styleProps} debtors={currentFriends} billStats={currentBill}/>
@@ -176,18 +183,16 @@ class AddNewBill extends Component {
       </div>
       </div>
       </div>
-      <div>
-        <RaisedButton
-          label={this.state.billAction}
-          onTouchTap={this.handleToggle.bind(this)}
-        />
-        <Drawer width={'700'} openSecondary={true} open={this.state.open} >
+        <Drawer width={'700'} openSecondary={true} open={this.state.drawerOpen} >
         <img style={img} src={uploadedBill}/>
         </Drawer>
       </div>
-      </div>
     )
   }
+}
+
+AddNewBill.contextTypes = {
+  router: PropTypes.object
 }
 
 export default AddNewBill

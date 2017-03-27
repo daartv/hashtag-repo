@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Checkbox from 'material-ui/Checkbox';
 import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
@@ -6,6 +6,14 @@ import Visibility from 'material-ui/svg-icons/action/visibility';
 import VisibilityOff from 'material-ui/svg-icons/action/visibility-off';
 
 import { Grid, Row, Col, Form, FormGroup, InputGroup, FormControl, Button} from 'react-bootstrap'
+
+const style = {
+  toggleButton: {
+    backgroundColor: 'rgb(0, 150, 136)',
+    color: 'white',
+    marginLeft: '5px'
+  }
+}
 
 const styles = {
         block: {
@@ -25,15 +33,16 @@ class FinalizeBill extends Component {
 
   submitFinalBill(event){
     event.preventDefault();
-    console.log('got HERE YOU DUMMY');
     this.props.submitBill();
   }
 
   render() {
+    const { billAction, toggleBill } = this.props;
+    const { toggleButton } = style;
    return (
   <div style={{'width':'90%', 'margin': '0 auto'}}>
     <div style={styles.block}>
-   
+
     <Grid>
      <Form horizontal>
      <Row className="show-grid">
@@ -44,7 +53,7 @@ class FinalizeBill extends Component {
       style={styles.checkbox}
     />
 
-    
+
    </Col>
    <Col xs={6} md={3}>
 
@@ -53,15 +62,16 @@ class FinalizeBill extends Component {
       style={styles.checkbox}
     />
 
-    
+
    </Col>
     </Row>
     <Row>
     <FormGroup>
           <Col>
-            <Button onClick={this.submitFinalBill} type='Finalize Bill'>
+            <Button onClick={event => this.submitFinalBill(event)} type='Finalize Bill'>
               Submit Bill
-            </Button> 
+            </Button>
+            <Button type='Toggle Bill' style={toggleButton} onClick={toggleBill}>{billAction}</Button>
           </Col>
         </FormGroup>
             </Row>
@@ -72,4 +82,9 @@ class FinalizeBill extends Component {
   );
 }
 }
+
+FinalizeBill.contextTypes = {
+  router: PropTypes.object
+}
+
 export default FinalizeBill

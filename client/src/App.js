@@ -30,8 +30,6 @@ class App extends Component {
 
 
   isLoggedIn (){
-    return true
-    // return this.state.signedIn;
     if (this.state.signedIn) {
       return true;
     } {

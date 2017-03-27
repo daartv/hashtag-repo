@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
 import { Form, FormGroup, InputGroup, FormControl, Button, Col, DropdownButton, MenuItem } from 'react-bootstrap'
 
-class AddFriends extends Component {
+const style = {
+  toggleButton: {
+    backgroundColor: 'rgb(0, 150, 136)',
+    color: 'white',
+    marginLeft: '5px'
+  }
+}
+
+class AddFriendsToBill extends Component {
   constructor(props){
     super(props);
     this.handleAddFriend = this.handleAddFriend.bind(this);
@@ -31,6 +39,8 @@ class AddFriends extends Component {
   }
 
   render() {
+    const { billAction, toggleBill } = this.props;
+    const { toggleButton } = style;
 
   return (
   <div style={{'width':'90%', 'margin': '0 auto'}}>
@@ -62,10 +72,11 @@ class AddFriends extends Component {
           <Col>
             <Button onClick={this.handleAddFriend} type='Add to bill'>
               Add Friend
-            </Button> 
+            </Button>
             <Button style={{'marginLeft': '5px'}} onClick={this.handleSubmitFriends} type='Add Friends'>
               Continue to Review Bill
             </Button>
+            <Button type='Toggle Bill' style={toggleButton} onClick={toggleBill}>{billAction}</Button>
           </Col>
         </FormGroup>
       </Form>
@@ -74,4 +85,4 @@ class AddFriends extends Component {
   }
 }
 
-export default AddFriends
+export default AddFriendsToBill
