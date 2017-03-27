@@ -49,8 +49,8 @@ app.post('/image', imgUpload.single('image'), (req, res) => {
   })
 })
 // app.get('/*', helper.checkUser);
-app.get('/users/checkStatus', helper.checkUser); 
-
+app.get('/users/checkStatus', helper.checkUser);
+app.get('/users/logout', helper.logoutUser);
 app.post('/users/signup', helper.userSignUp);
 app.post('/users/signin', helper.signInUser);
 

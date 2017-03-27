@@ -88,12 +88,12 @@ class AddNewBill extends Component {
         url: '/users/submitBill',
         data: JSON.stringify(userInfo),
         contentType: 'application/json',
-        success: (data) => { 
+        success: (data) => {
           console.log('_onSignIn success', data);
           this.props.onSignIn(true, data);
         },
-        error: (error) => {        
-          // console.log('_onSignIn error');        
+        error: (error) => {
+          // console.log('_onSignIn error');
           this.signInUsername.value = '';
           this.signInPassword.value = '';
           this.setState({ target: event.target, show: !this.state.show }); //for popover
@@ -101,6 +101,7 @@ class AddNewBill extends Component {
       });
     }
   render() {
+    const { uploadedBill } = this.props;
     const {currentBill, currentFriends} = this.state
     let formRender = this.state.stepIndex === 0 ? <AddBillForm addBill={this.addBill} currentBill={this.state.currentBill} /> : this.state.stepIndex === 1 ? <AddFriends addFriend={this.addFriend} currentFriends={this.state.currentFriends} handleAllFriends={this.submitFriends}/> : <FinalizeBill customSettings={this.customSettings} submitBill={this.submitBill}/>;
 
@@ -119,15 +120,15 @@ class AddNewBill extends Component {
       deselectOnClickaway: true,
       showCheckboxes: false
     }
-  
+
     return (
-      <div> 
+      <div>
       <div>
       <BillStats styleProps={styleProps} debtors={currentFriends} billStats={currentBill}/>
       </div>
       <div>
       <BillProgress handlePrev={this.handlePrev} getStepContent={this.getStepContent} currStep={formRender} handleNext={this.handleNext} passedState={passedState}/>
-      <div>   
+      <div>
       </div>
       </div>
       </div>

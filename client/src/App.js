@@ -29,7 +29,6 @@ class App extends Component {
   }
 
 
-  /* * * UNTIL WE ARE CORRECTLY CHECKING THE SESSION, ALTER THE RETURN VALUE TO MIMIC A VALID OR INVALID SESSION * * * */
   isLoggedIn (){
     // return this.state.signedIn;
     if (this.state.signedIn) {
@@ -39,7 +38,7 @@ class App extends Component {
         type: 'GET',
         url: '/users/checkStatus',
         contentType: 'application/json',
-        success: (data) => {  
+        success: (data) => {
           // console.log('WORKED', data);
           this.setState({signedIn: data.signedIn, user: data.user});
         },
@@ -51,8 +50,8 @@ class App extends Component {
     }
   }
 
-  _onSignIn(signIn, user) {  
-    if (signIn) {  
+  _onSignIn(signIn, user) {
+    if (signIn) {
       this.setState({signedIn: signIn, user: user});
     }
   }
@@ -65,46 +64,61 @@ class App extends Component {
   //   }
   // }
 
-  checkSession() { 
+  // checkSession() {
+  //   if (this.isLoggedIn()) {
+  //     return <Redirect to='/home'/>;
+  //   } else {
+  //     return <Main signedIn={this.state.signedIn} onSignIn={this._onSignIn}  />;
+  //   }
+
+  // }
+// MYCAH //
+
+    checkSession() {
     if (this.isLoggedIn()) {
       return <Redirect to='/home'/>;
     } else {
-      return <Main signedIn={this.state.signedIn} onSignIn={this._onSignIn}  />;
+      return <Redirect to='/hello'/>;
     }
-
   }
 
   componentDidMount() {
-      
+
   }
+
+  /* * * THIS WAY WE CAN PASS PROPS THROUGH THE ROUTE * * */
+    redirectToMain() {
+      console.log('redirect to main')
+      return <Main signedIn={this.state.signedIn} onSignIn={this._onSignIn} />
+    }
+
+  // render () {
+  //   return (
+  //     <Router>
+  //       <div>
+  //         <Route path='/' render={this.checkSession.bind(this)} />
+  //         <Route exact path='/home' component={UserPage}/>
+  //         <Route path='/signup' component={SignupPage} />
+  //       </div>
+  //     </Router>
+  //   );
+  // }
 
   render () {
     return (
       <Router>
         <div>
-          <Route path='/' render={this.checkSession.bind(this)} />
-          <Route exact path='/home' component={UserPage}/>      
+          <Route exact path='/' render={this.checkSession.bind(this)}/>
+          <Route path='/hello' render={this.redirectToMain.bind(this)} />
+          <Route path='/home' component={UserPage}/>
+          <Route path='/home/' render={this.checkSession.bind(this)}/>
           <Route path='/signup' component={SignupPage} />
         </div>
       </Router>
+
     );
   }
 }
 
 export default App
 
-/* Backup
-
-return (
-  <Router>
-    <div>
-      <Route exact path='/' render={this.checkSession.bind(this)}/>
-      <Route path='/home' component={UserPage}/>
-      <Route path='/home/' render={this.checkSession.bind(this)}/>
-      <Route path='/login' component={LoginPage} />
-      <Route path='/signup' component={SignupPage} />
-    </div>
-  </Router>
-);
-
-*/

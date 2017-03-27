@@ -33,7 +33,7 @@ class UserNavBar extends Component {
         </ToolbarGroup>
         <ToolbarGroup>
           <Link to="/"><LogoutButton logOut={logOut}/></Link>
-          <Link to="/home/addnewbill"><FlatButton label='New Bill' uploadBill={uploadBill}/></Link>
+          <NewBillButton uploadBill={uploadBill}/>
           <FriendsButton />
           <NavDropMenu/>
         </ToolbarGroup>

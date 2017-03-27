@@ -31,10 +31,10 @@ const fs = require('fs');
 //   res.render('login');
 // }
 
-exports.checkUser = function(req, res){ 
+exports.checkUser = function(req, res){
   let username = req.session.username;
   console.log('session', username);
-  if(username){ 
+  if(username){
     User.findOne({username: username})
       .exec(function(err, user){
         if(user === null) {
@@ -55,22 +55,33 @@ exports.checkUser = function(req, res){
 }
 
 
+exports.deleteFolderRecursive = function (userDir) {
+   if( fs.existsSync(userDir) ) {
+     fs.readdirSync(userDir).forEach(function(file) {
+       var curPath = userDir + "/" + file;
+         if(fs.statSync(curPath).isDirectory()) { // recurse
+             exports.deleteFolderRecursive(curPath);
+         } else { // delete file
+             fs.unlinkSync(curPath);
+         }
+     });
+     fs.rmdirSync(userDir);
+   }
+ }
+
 exports.logoutUser = function(req, res){
-  let username = req.session.username;
-  if(username !== null){
-    let userDir = __dirname + '/' + username;
-    fs.unlink(userDir, function(err){
-      if(err){
-        console.log('error');
-      }
-      req.session.destroy(function(){
-      res.redirect('/login');
-  })
-    })
-  }
-    else {
-      res.redirect('/login');
-    }
+ let username = req.session.username;
+ console.log(username);
+ if(username !== null){
+   let userDir = path.join(__dirname, '../dist') + '/' + username;
+   Promise.resolve(exports.deleteFolderRecursive(userDir))
+ .then(function(){
+   req.session.destroy(function (err) {
+   if (err) return next(err)
+   })
+ })
+ }
+ res.redirect('/')
 };
 
 exports.userBills = function(req, res){
@@ -170,7 +181,7 @@ exports.selectDebtors = function(debtors){
             }
             return newdebtor;
           })
-        } else {        
+        } else {
           return debt;
         }
       })
@@ -192,11 +203,11 @@ exports.addBill = function(req, res) {
     image: '',
     debtors: [{fName: 'Caspar', lName: 'Jones', email: 'cj@hotmail.com', owed: 100}]
   };
-  
+
   req.body = {bill: testBill};
   req.body.username = 'user7';
   req.session = {username:'Steve'};
-   
+
   ** TEST DATA **/
 
   let debtors = exports.selectDebtors(req.body.bill.debtors);
@@ -218,7 +229,7 @@ exports.addBill = function(req, res) {
       image: 'http://www.pngpix.com/wp-content/uploads/2016/04/Iphone-PNG-Image.png',
       debtors: debtorArr
     });
-    
+
     newBill.save()
     .then(newbill => {
       User.findOne({ username: req.body.username }).exec()
