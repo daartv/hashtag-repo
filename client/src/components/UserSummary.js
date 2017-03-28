@@ -7,11 +7,9 @@ const style = {
   display: 'inline-block'
 };
 
-
 class UserSummary extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       totalOwed: '0.00',
       billsRemaining: 0
@@ -20,7 +18,6 @@ class UserSummary extends Component {
 
   render() {
     const { totalOwed, billsRemaining } = this.state;
-
     return (
       <div>
         <div style={style}>
@@ -38,7 +35,4 @@ class UserSummary extends Component {
 }
 
 export default UserSummary;
-
-
-
 

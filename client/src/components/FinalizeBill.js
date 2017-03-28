@@ -26,8 +26,7 @@ const styles = {
 
 class FinalizeBill extends Component {
   constructor(props) {
-      super(props);
-    console.log(props);
+    super(props);
     this.submitFinalBill = this.submitFinalBill.bind(this);
   }
 
@@ -40,43 +39,41 @@ class FinalizeBill extends Component {
     const { billAction, toggleBill } = this.props;
     const { toggleButton } = style;
    return (
-  <div style={{'width':'90%', 'margin': '0 auto'}}>
-    <div style={styles.block}>
-
-    <Grid>
-     <Form horizontal>
-     <Row className="show-grid">
-      <Col xs={6} md={3}>
-
-    <Checkbox
-      label="Simple"
-      style={styles.checkbox}
-    />
-
-
-   </Col>
-   <Col xs={6} md={3}>
-
-    <Checkbox
-      label="Simple"
-      style={styles.checkbox}
-    />
-
-
-   </Col>
-    </Row>
-    <Row>
-    <FormGroup>
-          <Col>
-            <Button onClick={event => this.submitFinalBill(event)} type='Finalize Bill'>
-              Submit Bill
-            </Button>
-            <Button type='Toggle Bill' style={toggleButton} onClick={toggleBill}>{billAction}</Button>
+    <div style={{'width':'90%', 'margin': '0 auto'}}>
+      <div style={styles.block}>
+        <Grid>
+          <Form horizontal>
+            <Row className="show-grid">
+            <Col xs={6} md={3}>
+              <Checkbox
+                label="Simple"
+                style={styles.checkbox}
+              />
           </Col>
-        </FormGroup>
-            </Row>
-            </Form>
-    </Grid>
+          <Col xs={6} md={3}>
+            <Checkbox
+              label="Simple"
+              style={styles.checkbox}
+            />
+          </Col>
+          </Row>
+          <Row>
+            <FormGroup>
+              <Col>
+                <Button
+                  onClick={event => this.submitFinalBill(event)}
+                  type='Finalize Bill'>
+                  Submit Bill
+                </Button>
+                <Button
+                  type='Toggle Bill'
+                  style={toggleButton}
+                  onClick={() => {toggleBill()}}>{billAction}</Button>
+              </Col>
+            </FormGroup>
+          </Row>
+        </Form>
+      </Grid>
     </div>
   </div>
   );

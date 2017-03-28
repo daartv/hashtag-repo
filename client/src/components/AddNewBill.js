@@ -10,10 +10,10 @@ import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 
 import AddFriendsToBill from './AddFriendsToBill'
-import AddBillForm from '../components/AddBillForm'
-import BillProgress from '../components/BillProgress'
-import BillStats from '../components/BillTable'
-import FinalizeBill from '../components/FinalizeBill'
+import AddBillForm from './AddBillForm'
+import BillProgress from './BillProgress'
+import BillStats from './BillTable'
+import FinalizeBill from './FinalizeBill'
 
 const style = {
   formCenter: {
@@ -54,7 +54,7 @@ class AddNewBill extends Component {
     this.handlePrev = this.handlePrev.bind(this);
   }
 
-  addBill(billInfo){
+  addBill(billInfo) {
     this.setState({currentBill: billInfo}, function(){
      this.handleNext();
     });
@@ -72,11 +72,11 @@ class AddNewBill extends Component {
     }
   }
 
-  submitFriends(){
+  submitFriends() {
     this.handleNext();
   }
 
-  handleNext(){
+  handleNext() {
     const {stepIndex} = this.state;
     this.setState({
       stepIndex: stepIndex + 1,
@@ -84,7 +84,7 @@ class AddNewBill extends Component {
     });
   }
 
-  handlePrev (){
+  handlePrev() {
     const {stepIndex} = this.state;
     if (stepIndex > 0) {
       this.setState({stepIndex: stepIndex - 1});
@@ -104,7 +104,7 @@ class AddNewBill extends Component {
     }
   }
 
-  handleBillSubmit(){
+  handleBillSubmit() {
     let self = this;
     let totalDebts = this.state.currentFriends.reduce(function(accum, friend){
       return accum += friend.debtAmount;
@@ -136,24 +136,40 @@ class AddNewBill extends Component {
     }
 
   toggleBill() {
-
     this.setState({
       drawerOpen: !this.state.drawerOpen,
       billAction: this.state.drawerOpen ? 'Show Bill' : 'Hide Bill'
     })
   };
 
-
   render() {
-    const {currentBill, currentFriends} = this.state
-    const { uploadedBill } = this.props
-    const { formCenter, formSide, img } = style
+    const {currentBill, currentFriends} = this.state;
+    const { uploadedBill } = this.props;
+    const { formCenter, formSide, img } = style;
+    const formRender = this.state.stepIndex === 0 ?
+      <AddBillForm
+        addBill={this.addBill}
+        currentBill={this.state.currentBill}
+        toggleBill={this.toggleBill.bind(this)}
+        billAction={this.state.billAction} />
+        : this.state.stepIndex === 1 ?
+      <AddFriendsToBill
+        addFriend={this.addFriend}
+        currentFriends={this.state.currentFriends}
+        handleAllFriends={this.submitFriends}
+        toggleBill={this.toggleBill.bind(this)}
+        billAction={this.state.billAction} /> :
+      <FinalizeBill
+        customSettings={this.customSettings}
+        submitBill={this.handleBillSubmit}
+        toggleBill={this.toggleBill.bind(this)}
+        billAction={this.state.billAction} />;
 
-    let formRender = this.state.stepIndex === 0 ? <AddBillForm addBill={this.addBill} currentBill={this.state.currentBill} toggleBill={this.toggleBill.bind(this)} billAction={this.state.billAction} /> : this.state.stepIndex === 1 ? <AddFriendsToBill addFriend={this.addFriend} currentFriends={this.state.currentFriends} handleAllFriends={this.submitFriends} toggleBill={this.toggleBill.bind(this)} billAction={this.state.billAction} /> : <FinalizeBill customSettings={this.customSettings} submitBill={this.handleBillSubmit} toggleBill={this.toggleBill.bind(this)} billAction={this.state.billAction} />;
     const passedState = {
       stepIndex: this.state.stepIndex,
       finished: this.state.finished
-    }
+    };
+
     const styleProps = {
       fixedHeader: true,
       fixedFooter: true,
@@ -164,24 +180,33 @@ class AddNewBill extends Component {
       enableSelectAll: false,
       deselectOnClickaway: true,
       showCheckboxes: false
-    }
+    };
 
     return (
-      <div style={this.state.drawerOpen ? formSide : formCenter }>
-      <div>
-      <div>
-      <BillStats styleProps={styleProps} debtors={currentFriends} billStats={currentBill}/>
+      <div style={this.state.drawerOpen ? formSide : formCenter}>
+        <div>
+          <div>
+          <BillStats
+            styleProps={styleProps}
+            debtors={currentFriends}
+            billStats={currentBill}/>
+        </div>
+        <div>
+        <BillProgress
+          handlePrev={this.handlePrev}
+          getStepContent={this.getStepContent}
+          currStep={formRender}
+          handleNext={this.handleNext}
+          passedState={passedState}/>
+        </div>
       </div>
-      <div>
-      <BillProgress handlePrev={this.handlePrev} getStepContent={this.getStepContent} currStep={formRender} handleNext={this.handleNext} passedState={passedState}/>
-      <div>
-      </div>
-      </div>
-      </div>
-        <Drawer width={'700'} openSecondary={true} open={this.state.drawerOpen} >
+      <Drawer
+        width={'700'}
+        openSecondary={true}
+        open={this.state.drawerOpen} >
         <img style={img} src={uploadedBill}/>
-        </Drawer>
-      </div>
+      </Drawer>
+    </div>
     )
   }
 }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Navbar, Nav, NavItem } from 'react-bootstrap'
-import NewBillButton from '../components/NewBillButton'
-import FriendsButton from '../components/FriendsButton'
-import NavDropMenu from '../components/NavDropMenu'
-import Login from '../containers/Login'
+import NewBillButton from './NewBillButton'
+import FriendsButton from './FriendsButton'
+import NavDropMenu from './NavDropMenu'
+import Login from './Login'
 
 class MainNavBar extends Component {
   constructor(props) {
@@ -20,7 +20,6 @@ class MainNavBar extends Component {
   }
 
   render() {
-
     return (
       <Navbar fluid className="navbar navbar-fixed-top navbar-default">
         <Navbar.Header>
@@ -30,7 +29,7 @@ class MainNavBar extends Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Login onSignIn={this._handleLogin}   />
+          <Login onSignIn={this._handleLogin} />
         </Navbar.Collapse>
       </Navbar>
     );

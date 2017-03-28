@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import $ from 'jquery';
-import UserPage from './containers/UserPage';
-import LoginPage from './containers/LoginPage';
-import SignupPage from './containers/SignupPage';
-import Main from './containers/Main';
+import UserPage from './components/UserPage';
+import SignupPage from './components/SignupPage';
+import Main from './components/Main';
 
 class App extends Component {
   constructor (props) {

@@ -36,20 +36,19 @@ class NewBillButton extends Component {
   }
 
     render () {
-      // const { handleChange } = this;
       return (
         <div>
-          <FlatButton label='New Bill' onClick={() => {this.refs.uploadedBill.click()}}/>
+          <FlatButton label='New Bill' onClick={() => {this.refs.uploadedBill.click()}} />
           <input
             type='file'
             ref='uploadedBill'
             style={{display: 'none'}}
-            onChange={ event => this.handleChange(event) }
-            />
-          </div>
+            onChange={ event => this.handleChange(event) } />
+        </div>
         )
     }
   }
+
   NewBillButton.contextTypes = {
     router: PropTypes.object
   }

@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react'
 import { Form, FormGroup, InputGroup, FormControl, Button, Col, DropdownButton, MenuItem } from 'react-bootstrap'
 
@@ -12,8 +11,7 @@ const style = {
 
 class AddBillForm extends Component {
   constructor(props) {
-      super(props);
-    this.handleBillSubmit = this.handleBillSubmit.bind(this);
+    super(props);
     this.handleAddBill = this.handleAddBill.bind(this);
   }
 
@@ -28,10 +26,6 @@ class AddBillForm extends Component {
     this.props.addBill(billInfo);
   }
 
-  handleBillSubmit(event){
-    console.log(event);
-  }
-
   render() {
     const dateObj = new Date();
     const month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -44,36 +38,55 @@ class AddBillForm extends Component {
 
     return (
       <div style={{'width':'90%', 'maxWidth': 700, 'margin': '0 auto'}}>
-      <Form horizontal>
-        <FormGroup controlId='billDate'>
-          <Col>
-            <FormControl type='text' inputRef={ref => {this.billDate = ref; }}  placeholder="Bill Date" value={newdate} />
-          </Col>
-        </FormGroup>
-        <FormGroup controlId='billName'>
-          <Col>
-            <FormControl type='text' inputRef={ref => {this.billName = ref; }} placeholder="Bill Name" required />
-          </Col>
-        </FormGroup>
-        <FormGroup controlId='billTotal'>
-          <Col>
-            <InputGroup>
-              <InputGroup.Addon>$</InputGroup.Addon>
-              <FormControl type='text' inputRef={ref => {this.billTotal = ref;}} placeholder='Bill Total' required />
-            </InputGroup>
-          </Col>
-        </FormGroup>
-        <FormGroup>
-          <Col>
-          <div>
-            <Button type='Add New Bill' onClick={this.handleAddBill}>
-              Add New Bill
-            </Button>
-            <Button type='Toggle Bill' style={toggleButton} onClick={toggleBill}>{billAction}</Button>
-            </div>
-          </Col>
-        </FormGroup>
-      </Form>
+        <Form horizontal>
+          <FormGroup controlId='billDate'>
+            <Col>
+              <FormControl
+                type='text'
+                inputRef={ref => this.billDate = ref}
+                placeholder="Bill Date"
+                value={newdate} />
+            </Col>
+          </FormGroup>
+          <FormGroup controlId='billName'>
+            <Col>
+              <FormControl
+                type='text'
+                inputRef={ref => this.billName = ref}
+                placeholder='Bill Name'
+                required />
+            </Col>
+          </FormGroup>
+          <FormGroup controlId='billTotal'>
+            <Col>
+              <InputGroup>
+                <InputGroup.Addon>$</InputGroup.Addon>
+                <FormControl
+                  type='text'
+                  inputRef={ref => this.billTotal = ref}
+                  placeholder='Bill Total'
+                  required />
+              </InputGroup>
+            </Col>
+          </FormGroup>
+          <FormGroup>
+            <Col>
+            <div>
+              <Button
+                type='Add New Bill'
+                onClick={this.handleAddBill}>
+                Add New Bill
+              </Button>
+              <Button
+                type='Toggle Bill'
+                style={toggleButton}
+                onClick={toggleBill}>
+                {billAction}
+              </Button>
+              </div>
+            </Col>
+          </FormGroup>
+        </Form>
       </div>
     )
   }

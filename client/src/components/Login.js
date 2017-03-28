@@ -45,30 +45,33 @@ class Login extends Component {
     return (
       <Navbar.Form pullRight>
         <FormGroup>
-          <FormControl type='text' placeholder='Username'
-            inputRef={ref => { this.signInUsername = ref; }} required
-          />
+          <FormControl
+            type='text'
+            placeholder='Username'
+            inputRef={ref => { this.signInUsername = ref; }}
+            required />
           {' '}
-          <FormControl type='text' placeholder='Password'
-            inputRef={ref => { this.signInPassword = ref; }} required
-          />
+          <FormControl
+            type='text'
+            placeholder='Password'
+            inputRef={ref => { this.signInPassword = ref; }}
+            required />
           {' '}
-        <Button type='submit' bsStyle='success' onClick={this.handleSignIn} >Login</Button>
+        <Button
+          type='submit'
+          bsStyle='success'
+          onClick={this.handleSignIn}>Login</Button>
         <Overlay
           show={this.state.show}
           target={this.state.target}
           placement="bottom"
           container={this}
-          containerPadding={20}
-        >
-        <Popover id="popover-contained" title=""
-
-        >
+          containerPadding={20}>
+        <Popover id="popover-contained" title="">
           <strong>Invalid username or password.</strong>
         </Popover>
         </Overlay>
         </FormGroup>
-
       </Navbar.Form>
     )
   }

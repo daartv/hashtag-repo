@@ -1,6 +1,5 @@
 const imgURL = '../assets/images/bigstock-Group-Of-Friends-Meeting-For-L-59135003.jpg'
 const style = {
-
   container: {
     backgroundColor: '#263238',
     height: '100vh',

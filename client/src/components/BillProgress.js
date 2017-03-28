@@ -6,7 +6,7 @@ import {
 } from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import AddBillForm from '../components/AddBillForm'
+import AddBillForm from './AddBillForm'
 /**
  * Horizontal steppers are ideal when the contents of one step depend on an earlier step.
  * Avoid using long step names in horizontal steppers.
@@ -16,7 +16,7 @@ import AddBillForm from '../components/AddBillForm'
 class BillProgress extends Component {
   constructor(props) {
       super(props);
-    
+
   }
 
 
@@ -54,7 +54,7 @@ class BillProgress extends Component {
           ) : (
             <div>
               <p>{this.props.getStepContent(stepIndex)}</p>
-              
+
             </div>
           )}
         </div>

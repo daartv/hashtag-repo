@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import UserBillsTableEntry from '../components/UserBillsTableEntry';
+import UserBillsTableEntry from './UserBillsTableEntry';
 import UserSummary from './UserSummary'
-
 import Style from './userBillsTable-css';
 
 const { table } = Style
@@ -38,37 +37,19 @@ class UserBillsTable extends Component {
         date: 'Test Date'
       }
     ];
-
   }
 
   render() {
     const samples = this.exampleData;
-
     return (
       <div>
         <UserSummary />
         <div style={table}>
-          {
-            // <UserBillsTableEntry />
-            samples.map((entry) => <UserBillsTableEntry key={entry.id} entry={entry}/>)
-          }
-          </div>
+          { samples.map((entry) => <UserBillsTableEntry key={entry.id} entry={entry}/>) }
+        </div>
       </div>
     );
   }
 }
 
 export default UserBillsTable;
-
-/*
-
-<table className="ubt-table">
-  <tbody>
-    {
-      // <UserBillsTableEntry />
-      samples.map((entry) => <UserBillsTableEntry key={entry.id} entry={entry} />)
-    }
-  </tbody>
-</table>
-
-*/

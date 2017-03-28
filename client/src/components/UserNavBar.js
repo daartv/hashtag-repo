@@ -16,10 +16,10 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
-import NewBillButton from '../components/NewBillButton'
-import LogoutButton from '../components/LogoutButton'
-import FriendsButton from '../components/FriendsButton'
-import NavDropMenu from '../components/NavDropMenu'
+import NewBillButton from './NewBillButton'
+import LogoutButton from './LogoutButton'
+import FriendsButton from './FriendsButton'
+import NavDropMenu from './NavDropMenu'
 
 
 class UserNavBar extends Component {
@@ -38,7 +38,6 @@ class UserNavBar extends Component {
           <NavDropMenu/>
         </ToolbarGroup>
       </Toolbar>
-
     )
   }
 };

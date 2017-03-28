@@ -22,11 +22,9 @@ class UserPage extends Component {
 
   uploadBill (uploadedBill, callback) {
     this.setState({ uploadedBill: uploadedBill.src }, callback)
-    console.log(this.state)
   }
 
   addBill(billInfo){
-    console.log('GOT HERE BRUH', billInfo);
     this.setState({currentBill: billInfo })
   }
 
@@ -62,13 +60,11 @@ class UserPage extends Component {
          uploadedBill={this.state.uploadedBill}
          billStats={this.state}
          addFriend={this.addFriend.bind(this)}
-         addBill={this.addBill.bind(this)}
-       />
+         addBill={this.addBill.bind(this)} />
      )
    }
 
    redirectLogout() {
-     console.log('redirect to main')
      return <Main signedIn={this.state.signedIn} onSignIn={this._onSignIn} />
    }
 
@@ -77,19 +73,16 @@ class UserPage extends Component {
 
     return (
       <Router>
-      <div>
-        <UserNavBar logOut={logOut.bind(this)} uploadBill={uploadBill.bind(this)}/>
-        {/* * * THIS COMPONENT BELOW THE NAV BAR WILL CONDITIONALLY RENDER * * * */}
-        <Route exact path='/home' component={ UserBillsTable }/>
-        <Route path='/home/friends' component={ FriendsList } />
-        <Route
-          path='/home/addnewbill'
-          render={ this.addNewBillWithProps.bind(this) } />
-        <Route path='/home/addfriend' component={ AddFriend } />
-        <Route path='/home/billhistory' component={ BillHistory } />
-        <Route path='/home/settings' component={ Settings } />
-        <Route path='/goodbye' render={this.redirectLogout.bind(this)} />
-
+        <div>
+          <UserNavBar logOut={logOut.bind(this)} uploadBill={uploadBill.bind(this)}/>
+          {/* * * THIS COMPONENT BELOW THE NAV BAR WILL CONDITIONALLY RENDER * * * */}
+          <Route exact path='/home' component={ UserBillsTable }/>
+          <Route path='/home/friends' component={ FriendsList } />
+          <Route path='/home/addnewbill' render={ this.addNewBillWithProps.bind(this) } />
+          <Route path='/home/addfriend' component={ AddFriend } />
+          <Route path='/home/billhistory' component={ BillHistory } />
+          <Route path='/home/settings' component={ Settings } />
+          <Route path='/goodbye' render={this.redirectLogout.bind(this)} />
         </div>
       </Router>
     );

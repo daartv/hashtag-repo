@@ -2,16 +2,15 @@ import React, {Component} from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import MTP from 'material-ui/styles/MuiThemeProvider';
 import MainNavBar from './MainNavBar'
-import Style from './mainPage-css';
+import Style from './main-css';
 
 const { container, heroStart, midSect, leftBox, navbar, rightBox, footer, heroInner, phonePhoto, topicLeft, topicRight, divider, footList } = Style
 
 class Main extends Component {
-  componentWillMount(){
+  componentWillMount() {
   }
 
   render() {
-
     return (
       <div>
       <MainNavBar signedIn={this.props.signedIn} onSignIn={this.props.onSignIn} />
@@ -31,7 +30,6 @@ class Main extends Component {
       <div style={midSect}>
       <h2 style={{"textAlign": "center", "fontSize": "30px"}}>Splitly</h2>
       <h3 style={{"textAlign": "center", "fontSize": "18px"}}>Split checks, without the awkwardness.</h3>
-
       </div>
       </div>
     )

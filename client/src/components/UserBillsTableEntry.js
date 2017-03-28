@@ -11,13 +11,10 @@ class UserBillsTableEntry extends Component {
       people: 'John Doe, Jane Doe',
       date: 'Test Date'
     };
-
   }
-
 
   render() {
     const { totalBill, moneyOwed, description, people, date } = this.props.entry;
-
     return (
       <div className="ubte-entry-div">
         <table className="ubte-table">

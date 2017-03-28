@@ -23,6 +23,9 @@ Server
 npm run start
 ```
 
+Test username / password located in server/models/testUsers.js
+
+
 ## Acknowledgments
 
 * Steve!
