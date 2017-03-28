@@ -3,6 +3,7 @@
 Split checks, without the awkwardness.
 
 
+
 ## Setup
 
 From within the root directory:
@@ -11,7 +12,7 @@ From within the root directory:
 npm install
 ```
 
-Build / run webpack
+Build / run with webpack
 
 ```
 npm run build:webpack
@@ -23,7 +24,11 @@ Server
 npm run start
 ```
 
-Test username / password located in server/models/testUsers.js
+Test username / password
+
+```
+server/models/testUsers.js
+```
 
 
 ## Acknowledgments
