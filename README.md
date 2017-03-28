@@ -2,13 +2,6 @@
 
 Split checks, without the awkwardness.
 
-### Installing Dependencies
-
-From within the root directory:
-
-```
-npm install
-```
 
 ### Setup
 
