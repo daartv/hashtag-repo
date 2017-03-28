@@ -5,22 +5,17 @@ import { Navbar, FormGroup, FormControl, Button, Overlay, Popover } from 'react-
 class Login extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       username: '',
       password: '',
       show: false
     };
-
-
     this.handleSignIn = this.handleSignIn.bind(this);
   }
-
 
   handleSignIn(event) {
     const self = this;
     event.preventDefault();
-    console.log('_onSignIn', event.target);
     if (this.signInUsername.value === '' || this.signInPassword.value === '') {
       this.setState({ target: event.target, show: !this.state.show }); //for popover
     } else {
@@ -34,12 +29,10 @@ class Login extends Component {
         data: JSON.stringify(userInfo),
         contentType: 'application/json',
         success: (data) => {
-          console.log('_onSignIn success', data);
           this.props.onSignIn(true, data);
           self.context.router.history.push('/home')
         },
         error: (error) => {
-          // console.log('_onSignIn error');
           this.signInUsername.value = '';
           this.signInPassword.value = '';
           this.setState({ target: event.target, show: !this.state.show }); //for popover
@@ -48,7 +41,6 @@ class Login extends Component {
     }
   }
 
-  // need to find a way to call the event handler if the user tab on the button and press enter react-bootstrap button doesnt trigger the function
   render() {
     return (
       <Navbar.Form pullRight>
@@ -87,21 +79,3 @@ Login.contextTypes = {
 }
 
 export default Login
-
-/*
-//for popover
-<Overlay
-  show={this.state.show}
-  target={this.state.target}
-  placement="bottom"
-  container={this}
-  containerPadding={20}
-  positionLeft={200} positionTop={200}
->
-<Popover id="popover-contained" title=""
-  positionLeft={200} positionTop={200}>
-  <strong>Invalid username or password.</strong>
-</Popover>
-</Overlay>
-
-*/

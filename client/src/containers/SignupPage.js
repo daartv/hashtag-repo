@@ -4,18 +4,14 @@ import $ from 'jquery';
 class SignupPage extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       accountExistsMessage: '',
-
     };
-
     this._onSignUp = this._onSignUp.bind(this);
   }
 
   _onSignUp(event) {
     event.preventDefault();
-    console.log('_onSignUp');
     const userInfo = {
       username: this.username.value,
       firstName: this.firstName.value,
@@ -30,16 +26,12 @@ class SignupPage extends Component {
       data: JSON.stringify(userInfo),
       contentType: 'application/json',
       success: (data) => {
-        // this.setState({showUserPage: true});
-        console.log('_onSignUp success', data);
         this.props.onSignIn(true);
       },
       error: (error) => {
-        console.log('_onSignUp error');
         this.setState({accountExistsMessage: 'Account already exists. Use different username or email.'});
       }
     });
-
   }
 
   render() {
@@ -145,6 +137,4 @@ const style = {
     color: 'red',
     display: 'block'
   }
-
-
 };

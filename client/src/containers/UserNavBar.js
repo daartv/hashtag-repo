@@ -32,7 +32,7 @@ class UserNavBar extends Component {
           <ToolbarTitle text='Splitly' />
         </ToolbarGroup>
         <ToolbarGroup>
-          <Link to="/"><LogoutButton logOut={logOut}/></Link>
+          <LogoutButton logOut={logOut}/>
           <NewBillButton uploadBill={uploadBill}/>
           <FriendsButton />
           <NavDropMenu/>

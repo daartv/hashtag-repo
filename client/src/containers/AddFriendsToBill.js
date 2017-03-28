@@ -28,13 +28,11 @@ class AddFriendsToBill extends Component {
     this.debtorlName.value = '';
     this.debtorEmail.value = '';
     this.debtAmount.value = '';
-    console.log(debtorInfo);
     this.props.addFriend(debtorInfo);
   }
 
   handleSubmitFriends(event){
     event.preventDefault();
-    console.log('GOT HALFWAY');
     this.props.handleAllFriends();
   }
 

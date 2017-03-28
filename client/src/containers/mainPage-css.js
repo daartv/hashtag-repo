@@ -8,8 +8,6 @@ const style = {
     minWidth: '600px',
     maxWidth: '100%',
     paddingTop: '2.5vh',
-    // paddingLeft: '2.5vh',
-    // paddingRight: '2.5vh',
     margin: '0 auto'
   },
 

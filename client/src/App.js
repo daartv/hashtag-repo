@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
-
 import axios from 'axios';
 import $ from 'jquery';
-
 import UserPage from './containers/UserPage';
 import LoginPage from './containers/LoginPage';
 import SignupPage from './containers/SignupPage';
 import Main from './containers/Main';
-
-/* * * * I DIDN'T TAKE OUT ANY OF THESE FUNCTIONS, THOUGH I CHANGE THE NAME OF ONE - ISLOGGEDIN()
-I'LL LET YOU FINALIZE THE AUTHENTICATION SPECIFICS, THOUGH PROVIDED ISLOGGEDIN RETURNS TRUE OR FALSE, THE ROUTING WILL WORK.
-
-RIGHT NOW, THE ROUTES WILL AUTOMATICALLY REDIRECT TO THE USER'S PAGE IF ISLOGGEDIN RETURNS TRUE - MEANING THEY HAVE A VALID SESSION OR ARE LOGGED IN. ALL NESTED ROUTES WITHIN /HOME (e.g., HOME/BILLHISTORY, HOME/FRIENDS ETC.) ARE ALSO PROTECTED. PLEASE DON'T CHANGE THE STRUCTURE OF THESE ROUTES, AS REACT ROUTER VERSION 4 IS A BITCH :) :) :)  * * * */
-
 
 class App extends Component {
   constructor (props) {
@@ -28,7 +20,6 @@ class App extends Component {
     this._onSignIn = this._onSignIn.bind(this);
   }
 
-
   isLoggedIn (){
     if (this.state.signedIn) {
       return true;
@@ -38,7 +29,6 @@ class App extends Component {
         url: '/users/checkStatus',
         contentType: 'application/json',
         success: (data) => {
-          console.log('WORKED', data);
           this.setState({signedIn: data.signedIn, user: data.user});
         },
         error: (error) => {
@@ -55,24 +45,6 @@ class App extends Component {
     }
   }
 
-  // requireAuth(nextState, replace) {
-  //   if (!this.state.signedIn) {
-  //     replace({
-  //       pathname: '/login'
-  //     })
-  //   }
-  // }
-
-  // checkSession() {
-  //   if (this.isLoggedIn()) {
-  //     return <Redirect to='/home'/>;
-  //   } else {
-  //     return <Main signedIn={this.state.signedIn} onSignIn={this._onSignIn}  />;
-  //   }
-
-  // }
-// MYCAH //
-
     checkSession() {
     if (this.isLoggedIn()) {
       return <Redirect to='/home'/>;
@@ -84,24 +56,11 @@ class App extends Component {
   componentDidMount() {
 
   }
-
   /* * * THIS WAY WE CAN PASS PROPS THROUGH THE ROUTE * * */
     redirectToMain() {
-      console.log('redirect to main')
       return <Main signedIn={this.state.signedIn} onSignIn={this._onSignIn} />
     }
 
-  // render () {
-  //   return (
-  //     <Router>
-  //       <div>
-  //         <Route path='/' render={this.checkSession.bind(this)} />
-  //         <Route exact path='/home' component={UserPage}/>
-  //         <Route path='/signup' component={SignupPage} />
-  //       </div>
-  //     </Router>
-  //   );
-  // }
 
   render () {
     return (

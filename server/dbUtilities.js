@@ -1,10 +1,3 @@
-//request-handlers
-//multer stores img file, look into how to store reference to it in mongo
-//path vs actual image
-//attaches image info in two properties - request.file.path - and file
-//unique pathname exists for the image
-//helper function to destroy temp files
-
 const request = require('request');
 const db = require('./dbConfig');
 const path = require('path')
@@ -13,55 +6,33 @@ const Bill = require('./models/bills');
 const Debtor = require('./models/debtor');
 const fs = require('fs');
 
-// const mongoose = require('mongoose');
-// mongoose.Promise = require('bluebird');
-
-//Password only needed if we aren't using Facebook oAuth.
-  // MVP just using no oAuth and no encrypted PW.
-
-// exports.renderIndex = function(req, res){
-//   res.render('index');
-// }
-
-// exports.signUpUser = function(req, res){
-//   res.render('signUp');
-// }
-
-// exports.loginInUser = function(req, res){
-//   res.render('login');
-// }
-
-exports.checkUser = function(req, res){ 
+exports.checkUser = function(req, res){
   let username = req.session.username;
-  if(username){ 
+  if(username){
     User.findOne({username: username})
       .exec(function(err, user){
         if(user === null) {
-          // res.redirect('/login');
           res.sendStatus(500);
         } else {
-          
+
           req.session.username = user.username;
           req.session.userID = user.id;
           exports.createUserStorage(user.username);
-          // res.redirect('/profile/' + req.session.username);
           res.send({signedIn: true, user: user});
         }
        })
-    // res.send({signedIn: true, user: username});
   } else{
     res.redirect('/');
   }
 }
 
-
 exports.deleteFolderRecursive = function (userDir) {
     if( fs.existsSync(userDir) ) {
       fs.readdirSync(userDir).forEach(function(file) {
         var curPath = userDir + "/" + file;
-          if(fs.statSync(curPath).isDirectory()) { // recurse
+          if(fs.statSync(curPath).isDirectory()) {
               exports.deleteFolderRecursive(curPath);
-          } else { // delete file
+          } else {
               fs.unlinkSync(curPath);
           }
       });
@@ -87,15 +58,9 @@ exports.userBills = function(req, res){
   exports.getBillsOwner(req, res);
 };
 
-
 exports.signInUser = function(req, res) {
   let username = req.body.username;
   let pw = req.body.password;
-
-
-  // if(req.session.username){
-  //   res.redirect('/profile/' + req.session.username);
-  // }
 
    User.findOne({username: username, password: pw})
    .exec(function(err, user){
@@ -108,12 +73,10 @@ exports.signInUser = function(req, res) {
       req.session.username = user.username;
       req.session.userID = user.id;
       exports.createUserStorage(user.username);
-      // res.redirect('/profile/' + req.session.username);
       res.send(user);
     }
    })
 };
-
 
 exports.userSignUp = function(req, res) {
   let username = req.body.username;
@@ -145,7 +108,6 @@ exports.userSignUp = function(req, res) {
     }
    })
 };
-
 
 exports.getBillsOwner = function(req, res){
   Bill.find({owner: req.session.username})
@@ -179,22 +141,19 @@ exports.selectDebtors = function(debtors){
             }
             return newdebtor;
           })
-        } else {        
+        } else {
           return debt;
         }
       })
   });
-
 }
 
-// on addBill ajax request, please create an object with bill property and  username
 exports.addBill = function(req, res) {
   let debtors = exports.selectDebtors(req.body.bill.debtors);
   Promise.all(debtors)
   .then(values => {
     let debtorArr = [];
     const debtorsInfo = req.body.bill;
-    // adding new properties to the debtors objects
     for ( var i = 0; i < values.length; i++ ) {
       debtorArr.push({debtorId: values[i]._id, owed: debtorsInfo.debtors[i].owed, paidAmount: 0});
     }
@@ -209,7 +168,7 @@ exports.addBill = function(req, res) {
       image: debtorsInfo.image,
       debtors: debtorArr
     });
-    
+
     newBill.save()
     .then(newbill => {
       User.findOne({ username: req.session.username }).exec()
@@ -218,7 +177,6 @@ exports.addBill = function(req, res) {
         user.save()
           .then(user => {
             console.log('last cl: user', user);
-            // fs.unlink('./temp/' + req.file.billPhoto.path);
             res.send(user);
           })
           .catch(err => {
@@ -242,7 +200,6 @@ exports.addBill = function(req, res) {
   });
 }
 
-//Create a temp directory and store bill images for user once they sign in
 exports.createUserStorage = function(username){
   let newDir = path.join(__dirname, '../dist') + '/' + username;
   if (!fs.existsSync(newDir)){ //checks if dir exist

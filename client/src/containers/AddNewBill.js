@@ -6,7 +6,6 @@ import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 
-
 import FlatButton from 'material-ui/FlatButton';
 import Toggle from 'material-ui/Toggle';
 
@@ -69,13 +68,11 @@ class AddNewBill extends Component {
      })
     } else {
       this.setState({currentFriends: [debtorsInfo]}, function(){
-        console.log('you added a friend', this.state.currentFriends);
       });
     }
   }
 
   submitFriends(){
-    console.log('Got to the final step')
     this.handleNext();
   }
 
@@ -130,11 +127,9 @@ class AddNewBill extends Component {
         data: JSON.stringify(sendData),
         contentType: 'application/json',
         success: (data) => {
-          console.log('Bill Added', data);
           self.context.router.history.push('/home')
         },
         error: (error) => {
-          console.log('bill not added', error);
           self.context.router.history.push('/home')
         }
       });
