@@ -3,7 +3,7 @@
 Split checks, without the awkwardness.
 
 
-### Setup
+## Setup
 
 From within the root directory:
 
